@@ -77,7 +77,7 @@ def start_page():
                   </head>
                   <body>
                    <h1 class="text" style="text-align:center; font-family: AnotherCastle3;"><font color="#00ff7f" 
-                   size=7><center>Heartstone Russia Edition</center></font></h1>
+                   size=7><center>НАЗВАНИЕ ПОТОМ ПРИДУМАЕМ</center></font></h1>
                    <h2 style="text-align:center; font-family: AnotherCastle3"><font color="#a1f9ba" 
                    size=5>Этот проект является<br>
                    новым взглядом на прекрасную игру - heartstone компании Bilzard</font></h2>
