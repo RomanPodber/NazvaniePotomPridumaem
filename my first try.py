@@ -23,7 +23,7 @@ def start_page():
                         display: inline-block;
                         text-align: center;
                         text-decoration: none;
-                        margin-top: 150px;
+                        margin-top: 160px;
 
                         cursor: pointer;
                         font-size: 16px;
@@ -66,11 +66,11 @@ def start_page():
                                    }
                     .under {
                         display: inline-block;
-                        margin-top: 380px;
+                        margin-top: 360px;
                         margin-right: 30px;
                            }
                     .text {
-                        margin-top: 150px;
+                        margin-top: 170px;
                         margin-right: 30px;
                           }
                     </style>
