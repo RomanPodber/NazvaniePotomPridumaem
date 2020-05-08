@@ -11,7 +11,7 @@ def start_page():
                    <title>Startpage</title>
                     <style>
                     html {
-                        background:url(static/img/main_pic.png) no-repeat center center fixed;
+                        background:url(static/img/main_pic2.png) no-repeat center center fixed;
                          -webkit-background-size:cover;
                          -moz-background-size:cover;
                          -o-background-size:cover;
