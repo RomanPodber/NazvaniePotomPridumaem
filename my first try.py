@@ -72,12 +72,13 @@ def start_page():
                     </style>
                   </head>
                   <body>
-                   <h1 style="text-align:center; font-family: Fita Vjaz;"><font color="#00ff7f" 
+                   <h1 style="text-align:center; font-family: AnotherCastle3
+;"><font color="#00ff7f" 
                    size=7><center>Heartstone Russia Edition</center></font></h1>
-                   <h2 style="text-align:center; font-family: ar_Aquaguy"><font color="#a1f9ba" 
+                   <h2 style="text-align:center; font-family: AnotherCastle3"><font color="#a1f9ba" 
                    size=5>Этот проект является<br>
                    новым взглядом на прекрасную игру - heartstone компании Bilzard</font></h2>
-                   <p style="text-align:center; font-family: ar_Aquaguy;"><font color="#a1f9ba" 
+                   <p style="text-align:center; font-family: AnotherCastle3;"><font color="#a1f9ba" 
                    size=5>В игре зарегистрировано уже больше 10000000 человек<br>
                    Мы уже десять лет на рынке<br>это все опыт, который очень важен в нашей сфере</font></p>
                    <div style="text-align:center;">
