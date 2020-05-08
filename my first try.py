@@ -69,11 +69,14 @@ def start_page():
                         margin-top: 380px;
                         margin-right: 30px;
                            }
+                    .text {
+                        margin-top: 150px;
+                        margin-right: 30px;
+                          }
                     </style>
                   </head>
                   <body>
-                   <h1 style="text-align:center; font-family: AnotherCastle3
-;"><font color="#00ff7f" 
+                   <h1 class="text" style="text-align:center; font-family: AnotherCastle3;"><font color="#00ff7f" 
                    size=7><center>Heartstone Russia Edition</center></font></h1>
                    <h2 style="text-align:center; font-family: AnotherCastle3"><font color="#a1f9ba" 
                    size=5>Этот проект является<br>
