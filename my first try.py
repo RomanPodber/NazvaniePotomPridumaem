@@ -138,8 +138,8 @@ def wiki():
                     </style>
                   </head>
                   <body>
-                   <h1 style="text-align:center; font-family: Fita Vjaz;"><font color="#00ff7f" 
-                   size=7><center>Wikipedia</center></font></h1>
+                   <h1 style="text-align:center; font-family: AnotherCastle3;"><font color="#00ff7f" 
+                   size=7><center>ОБ ИГРЕ</center></font></h1>
                    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" 
                    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" 
                    crossorigin="anonymous"></script>
