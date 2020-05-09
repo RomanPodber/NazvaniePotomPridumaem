@@ -27,7 +27,7 @@ def start_page():
 
                         cursor: pointer;
                         font-size: 16px;
-                        font-family: ar_Aquaguy;
+                        font-family: AnotherCastle3;
                         padding: 20px 26px;
                         border-radius: 150px;
                         color: #000;
@@ -79,17 +79,20 @@ def start_page():
                    <h1 class="text" style="text-align:center; font-family: AnotherCastle3;"><font color="#00ff7f" 
                    size=7><center>НАЗВАНИЕ ПОТОМ ПРИДУМАЕМ</center></font></h1>
                    <h2 style="text-align:center; font-family: AnotherCastle3"><font color="#a1f9ba" 
-                   size=5>Этот проект является<br>
-                   новым взглядом на прекрасную игру - heartstone компании Bilzard</font></h2>
+                   size=5>Добро пожаловать!<br>
+                   Это основная страница нашего проекта</font></h2>
                    <p style="text-align:center; font-family: AnotherCastle3;"><font color="#a1f9ba" 
                    size=5>В игре зарегистрировано уже больше 10000000 человек<br>
-                   Мы уже десять лет на рынке<br>это все опыт, который очень важен в нашей сфере</font></p>
+                   На этой странице вы можете установить игру, узнать о ней через Wiki,<br>а так же зарегистрироваться
+                   или войти уже в существующий аккаунт</font></p>
+                   <p style="text-align:center; font-family: AnotherCastle3;"><font color="#a1f9ba" 
+                   size=5>Предлагаю собственноручно опробовать возможности нашего сайта</font></p>
                    <div style="text-align:center;">
                     <button id="login" class="button pink">
                      <i class="fa fa-unlock"></i>
                      <span>Войти в аккаунт</span>
                     </button>
-                    <a class="button yell" href="http://127.0.0.11:8000/wikipedia">
+                    <a class="button yell" href="http://127.0.0.16:8000/wikipedia">
                      <i class="fa fa-user-plus"></i>
                      <span>Игровая википедия</span>
                     </a>
