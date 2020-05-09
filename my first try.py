@@ -97,7 +97,7 @@ def start_page():
                      <i class="fa fa-user-plus"></i>
                      <span>Об игре</span>
                     </a>
-                    <a class="button mint" href="" download=les.png>
+                    <a class="button mint" href="http://127.0.0.16:8000/download">
                      <i class="fa fa-user-plus"></i>
                      <span>Установить игру</span>
                     </a>
@@ -178,6 +178,89 @@ def wiki():
                    </div>
                   </body>
                 </html>'''
+
+@app.route('/download')
+def download():
+    return '''<!doctype html>
+                <html lang="en">
+                  <head>
+                   <title>Startpage</title>
+                    <style>
+                    html {
+                        background:url(static/img/main_pic2.png) no-repeat center center fixed;
+                         -webkit-background-size:cover;
+                         -moz-background-size:cover;
+                         -o-background-size:cover;
+                         background-size: cover;
+                          }
+                    .button {
+                        border: none;
+                        outline: none;
+                        display: inline-block;
+                        text-align: center;
+                        text-decoration: none;
+                        margin-top: 150px;
+
+                        cursor: pointer;
+                        font-size: 16px;
+                        font-family: AnotherCastle3;
+                        padding: 20px 26px;
+                        border-radius: 150px;
+                        color: #000;
+                            }
+                    .button i {
+                        margin-right: 4px;
+                               }
+                    .button + .button {
+                        margin-left: 6px;
+                                      }
+                    .button.yell {
+                         background: #f9e6a1;
+                                   }
+                    .button.mint {
+                         background: #a1f9ba;
+                                   }
+
+                    .button:hover {
+                         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+                                  }
+                    .button:hover.yell {
+                         background: #fbecb9;
+                                          }
+                    .button:hover.mint {
+                         background: #b9fbcc;
+                                          }
+                    .button:active {
+                         box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+                         text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+                                   }
+                    .under {
+                        display: inline-block;
+                        margin-top: 150px;
+                        margin-right: 30px;
+                           }
+                    .text {
+                        margin-top: 250px;
+                        margin-right: 30px;
+                          }
+                    </style>
+                  </head>
+                  <body>
+                   <h1 class="text" style="text-align:center; font-family: AnotherCastle3;"><font color="#00ff7f" 
+                   size=7><center>ВЫБЕРИТЕ НУЖНЫЙ УСТАНОВЩИК</center></font></h1>
+                   <div style="text-align: center">
+                    <a class="button yell" href="" download=les.png>
+                     <i class="fa fa-user-plus"></i>
+                     <span>Установить для MAC</span>
+                    </a>
+                    <a class="button mint" href="" download=les.png>
+                     <i class="fa fa-user-plus"></i>
+                     <span>Установить для Windows</span>
+                    </a>
+                   </div>
+                  </body>
+                </html>'''
+
 
 
 if __name__ == '__main__':
