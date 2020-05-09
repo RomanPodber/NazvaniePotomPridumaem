@@ -66,11 +66,11 @@ def start_page():
                                    }
                     .under {
                         display: inline-block;
-                        margin-top: 220px;
+                        margin-top: 150px;
                         margin-right: 30px;
                            }
                     .text {
-                        margin-top: 200px;
+                        margin-top: 250px;
                         margin-right: 30px;
                           }
                     </style>
