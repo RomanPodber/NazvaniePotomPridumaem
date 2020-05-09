@@ -9,6 +9,7 @@ import random
 import socket
 import sys
 import time
+import json
 
 from pygame.locals import *
 
@@ -38,6 +39,8 @@ def get_text_width(text, spacing):
 
 
 def paused():
+    global current_level, entities, message_queue, level_messages
+
     pause = True
     timer = 0
 
@@ -66,8 +69,24 @@ def paused():
                     if n == 0:
                         pause = False
                     elif n == 1:
+                        for entity in entities:
+                            if entity.type not in ['player']:
+                                entity.entity_data['health'] = 0
+
+                        with open("save.json", "w") as data:
+                            data.write(json.dumps({"current_level": current_level}, ensure_ascii=False))
+
+                        pause = False
+                        fade_in = 10
+                        message_queue = [level_messages[current_level], 0, 0]
                         current_level = 0
-                        break
+                        load_level(entities, current_level)
+
+                        if fade_in > 0:
+                            fade_in -= 1
+                            black_surf = pygame.Surface((240, 135))
+                            black_surf.set_alpha(int(255 * fade_in / 10))
+                            display.blit(black_surf, (0, 0))
                     elif n == 2:
                         terminate()
 
@@ -142,6 +161,8 @@ font_gold = text.generate_font('data/font/small_font.png', font_dat, 5, 8, (247,
 font_brown = text.generate_font('data/font/small_font.png', font_dat, 5, 8, (70, 33, 31))
 font_blue = text.generate_font('data/font/small_font.png', font_dat, 5, 8, (15, 77, 163))
 # Картиночки враговБ игрока, окружения
+heart_img = pygame.image.load('data/images/heart.png').convert()
+heart_img.set_colorkey((255, 255, 255))
 background_img = pygame.image.load('data/images/background.png').convert()
 cast_marker_img = pygame.image.load('data/images/cast_marker.png').convert()
 cast_marker_img.set_colorkey((255, 255, 255))
@@ -250,14 +271,12 @@ def swap_color(image_swap, old_c, new_c):
 
 def load_level(entities_load, current_level_load):
     global levels
-    if current_level_load != 0:
+    if current_level_load > 0:
         for ent in levels[current_level_load]:
             entities_load.append(
                 e.Entity(ent[1], ent[2], entity_sizes[ent[0]][0], entity_sizes[ent[0]][1], ent[0]))
             if len(ent) == 4:
                 entities_load[-1].entity_data[ent[3]] = 1
-    else:
-        pass
 
 
 def text_screen(last_frame_text, screen_text):
@@ -324,7 +343,7 @@ def learn_spell(last_frame, spell_id):
         if scroll_y > 135:
             break
 
-
+timer = 0
 # Инфа о врагах, спэллах
 entity_defaults = {
     'player': {
@@ -442,6 +461,7 @@ level_messages = {
 }
 # Инфа о уровнях
 levels = {
+    0: ['dummy', 300, 300],
     1: [
         ['dummy', 96, 60]
     ],
@@ -496,7 +516,7 @@ left = False
 clicking = False
 entities = [e.Entity(50, 50, 6, 6, 'player')]
 player = entities[0]
-current_level = 0
+current_level = -1
 load_level(entities, current_level)
 
 spell_hitboxes = []
@@ -533,26 +553,14 @@ main_menu_background = pygame.image.load('data/images/main_menu_background.png')
 logo = pygame.image.load('data/images/logo.png').convert()
 logo.set_colorkey((255, 255, 255))
 
-new_game_img = pygame.image.load('data/images/new_game_text_1.png').convert()
-new_game_img.set_colorkey((255, 255, 255))
-
 press_img = pygame.image.load('data/images/press.png').convert()
 press_img.set_colorkey((255, 255, 255))
 
 knifes_img = pygame.image.load('data/images/knifes.png').convert()
 knifes_img.set_colorkey((255, 255, 255))
 
-exit_img = pygame.image.load('data/images/exit_text_2.png').convert()
-exit_img.set_colorkey((255, 255, 255))
-
-arena_img = pygame.image.load('data/images/arena_text_1.png').convert()
-arena_img.set_colorkey((255, 255, 255))
-
-continue_img = pygame.image.load('data/images/continue_text_2.png').convert()
-continue_img.set_colorkey((255, 255, 255))
-
 while True:
-    if current_level != 0:
+    if current_level > 0:
         # Позиция иышки
         mx, my = pygame.mouse.get_pos()
         mx = int(mx / window_width * 240)
@@ -686,7 +694,8 @@ while True:
                                                     random.randint(12, 15) / 30, 0])
                             for i in range(10):
                                 particles.append(
-                                    [entity.x - 2 + random.randint(0, 19), entity.y + entity.size_y - random.randint(0, 10),
+                                    [entity.x - 2 + random.randint(0, 19),
+                                     entity.y + entity.size_y - random.randint(0, 10),
                                      math.radians(270), random.randint(4, 7) / 10, random.randint(4, 7) / 10,
                                      random.randint(100, 200) / 1000, random.choice([(19, 178, 242), (65, 243, 252)])])
                     if entity.action == 'attack_1':
@@ -746,12 +755,14 @@ while True:
                                 entities.append(e.Entity(random.randint(0, 220), random.randint(0, 120), 16, 16, 'eye'))
                     if entity.action == 'ghost':
                         if entity.entity_data['cycle_timer'][0] < 20:
-                            entity_movement = [math.cos(entity.entity_data['ghost_angle']) * entity.entity_data['speed'],
-                                               math.sin(entity.entity_data['ghost_angle']) * entity.entity_data['speed']]
+                            entity_movement = [
+                                math.cos(entity.entity_data['ghost_angle']) * entity.entity_data['speed'],
+                                math.sin(entity.entity_data['ghost_angle']) * entity.entity_data['speed']]
                             entity.move(entity_movement, [], [])
                             particles.append([entity.x + 9, entity.y + 11, math.radians(random.randint(0, 360)),
                                               random.randint(0, 20) / 100, random.randint(10, 20) / 10,
-                                              random.randint(100, 200) / 1000, random.choice([(38, 36, 58), (20, 16, 32)])])
+                                              random.randint(100, 200) / 1000,
+                                              random.choice([(38, 36, 58), (20, 16, 32)])])
                             if entity.entity_data['cycle_timer'][0] == 1:
                                 entity.entity_data['cycle_timer'] = [39, 'reverse_ghost']
                                 entity.set_action('reverse_ghost')
@@ -763,7 +774,8 @@ while True:
                                                 random.randint(5, 15) / 15, 0])
                             particles.append(
                                 [entity.x - 6 + random.randint(0, 22), entity.y + entity.size_y + 3, math.pi * 3 / 2,
-                                 random.randint(4, 12) / 10, random.randint(10, 20) / 10, random.randint(100, 200) / 1000,
+                                 random.randint(4, 12) / 10, random.randint(10, 20) / 10,
+                                 random.randint(100, 200) / 1000,
                                  random.choice([(120, 31, 44), (53, 20, 40)])])
                     else:
                         entity.offset[0] = 0
@@ -795,7 +807,8 @@ while True:
                                                         math.radians(i * 60 + random.randint(0, 60)),
                                                         random.randint(30, 50) / 100, 0])
                                     particles.append([entity.get_center()[0], entity.get_center()[1],
-                                                      math.radians(random.randint(0, 360)), random.randint(20, 45) / 100, 0,
+                                                      math.radians(random.randint(0, 360)),
+                                                      random.randint(20, 45) / 100, 0,
                                                       0.05, random.choice([(38, 36, 58), (20, 16, 32), (26, 69, 59)])])
                     elif entity.entity_data['cycle_timer'] == 1:
                         entity.entity_data['cycle_timer'] = 240
@@ -813,7 +826,8 @@ while True:
                         eye_shoot_s.play()
                         entity.entity_data['cycle_timer'] = 0
                         projectiles.append(
-                            [entity.get_center()[0], entity.get_center()[1], get_entity_angle(entity, player) + rot_offset,
+                            [entity.get_center()[0], entity.get_center()[1],
+                             get_entity_angle(entity, player) + rot_offset,
                              random.randint(5, 8) / 10 * (m ** 0.5), 0])
                     if entity.entity_data['speed'] == 0:
                         entity.entity_data['speed'] = random.randint(3, 7) / 10
@@ -880,7 +894,8 @@ while True:
                             entity.entity_data['health'] -= dmg
                             entity.entity_data['hurt_timer'] = 15
                             damage_text.append(
-                                [entity.x + int(entity.size_x / 2) + random.randint(0, 2) - 1, entity.y - 15, str(dmg), 0])
+                                [entity.x + int(entity.size_x / 2) + random.randint(0, 2) - 1, entity.y - 15, str(dmg),
+                                 0])
             if entity.entity_data['health'] <= 0:
                 entity.alpha = int(entity.entity_data['hurt_timer'] / 15 * 255)
                 if entity.entity_data['hurt_timer'] <= 0:
@@ -995,9 +1010,11 @@ while True:
                     display.blit(health_bar_img,
                                  (entity.x + int(entity.size_x / 2) - 8 - scroll[0], entity.y - 7 - scroll[1]))
                     health_surf = pygame.Surface(
-                        (minimum(int(entity.entity_data['health'] / entity_defaults[entity.type]['health'] * 15), 1), 2))
+                        (
+                        minimum(int(entity.entity_data['health'] / entity_defaults[entity.type]['health'] * 15), 1), 2))
                     health_surf.fill((196, 44, 54))
-                    display.blit(health_surf, (entity.x + int(entity.size_x / 2) - 7 - scroll[0], entity.y - 6 - scroll[1]))
+                    display.blit(health_surf,
+                                 (entity.x + int(entity.size_x / 2) - 7 - scroll[0], entity.y - 6 - scroll[1]))
         # Текст получения дэмэджа
         r_list = []
         n = 0
@@ -1006,7 +1023,8 @@ while True:
             text.show_text(text_obj[2], text_obj[0] - int(get_text_width(text_obj[2], 1) / 2) - scroll[0] + 1,
                            text_obj[1] - scroll[1] - int(text_obj[3] / 4), 1, 9999, font_gold, display, alpha=alpha)
             text.show_text(text_obj[2], text_obj[0] - int(get_text_width(text_obj[2], 1) / 2) - scroll[0],
-                           text_obj[1] - scroll[1] - 1 - int(text_obj[3] / 4), 1, 9999, font_white, display, alpha=alpha)
+                           text_obj[1] - scroll[1] - 1 - int(text_obj[3] / 4), 1, 9999, font_white, display,
+                           alpha=alpha)
             text_obj[3] += 1
             if text_obj[3] >= 60:
                 r_list.append(n)
@@ -1043,7 +1061,8 @@ while True:
                     y + math.sin(math.radians((t - 10) * 6 + 270)) * scale)], 1)
             scale *= 1.3
             pygame.draw.polygon(display, (138, 206, 255), [
-                (x + math.cos(math.radians((-t + 10) * 6)) * scale, y + math.sin(math.radians((-t + 10) * 6)) * scale), (
+                (x + math.cos(math.radians((-t + 10) * 6)) * scale, y + math.sin(math.radians((-t + 10) * 6)) * scale),
+                (
                     x + math.cos(math.radians((-t + 10) * 6 + 90)) * scale,
                     y + math.sin(math.radians((-t + 10) * 6 + 90)) * scale), (
                     x + math.cos(math.radians((-t + 10) * 6 + 180)) * scale,
@@ -1122,11 +1141,17 @@ while True:
                 display.blit(next_arrow_img, (226, 126 + offset))
 
         # Интерфэйс
+        if player.entity_data["health"] >= 1:
+            display.blit(heart_img, (4, 3))
+        if player.entity_data["health"] >= 2:
+            display.blit(heart_img, (15, 3))
+        if player.entity_data["health"] >= 3:
+            display.blit(heart_img, (26, 3))
         if current_level > 1:
-            display.blit(mana_bar_img, (2, 2))
+            display.blit(mana_bar_img, (2, 14))
             mana_surf = pygame.Surface((mana, 3))
             mana_surf.fill((15, 77, 163))
-            display.blit(mana_surf, (3, 3))
+            display.blit(mana_surf, (3, 15))
         else:
             mana = 100
 
@@ -1140,7 +1165,8 @@ while True:
 
         if no_mana > 0:
             no_mana -= 1
-            text.show_text('Not enough mana!', 120 - int(get_text_width('Not enough mana!', 1) / 2), 60, 1, 9999, font_blue,
+            text.show_text('Not enough mana!', 120 - int(get_text_width('Not enough mana!', 1) / 2), 60, 1, 9999,
+                           font_blue,
                            display)
 
         # Конец или Смерть
@@ -1189,7 +1215,8 @@ while True:
                 else:
                     for i in range(2):
                         particles.append(
-                            [loc_x, loc_y, spell[4] + math.radians(random.randint(0, 90) - 45), random.randint(5, 20) / 10,
+                            [loc_x, loc_y, spell[4] + math.radians(random.randint(0, 90) - 45),
+                             random.randint(5, 20) / 10,
                              random.randint(100, 200) / 100, 0.4,
                              random.choice([(196, 44, 54), (229, 112, 40), (247, 172, 55)])])
                         spell_hitboxes.append([loc_x, loc_y, spell[2], 1])
@@ -1222,9 +1249,11 @@ while True:
                     for i in range(30):
                         particles.append([spell[0] + spell[3] * 3 + random.randint(0, 20) - 10,
                                           spell[1] - spell[3] * 7 + random.randint(0, 20) - 10, math.radians(i * 12),
-                                          random.randint(5, 10) / 10, 0, 0.2, random.choice([(120, 31, 44), (38, 36, 58)])])
+                                          random.randint(5, 10) / 10, 0, 0.2,
+                                          random.choice([(120, 31, 44), (38, 36, 58)])])
                         if i % 2 == 0:
-                            projectiles.append([spell[0], spell[1], math.radians(i * 12), random.randint(5, 20) / 10, 0])
+                            projectiles.append(
+                                [spell[0], spell[1], math.radians(i * 12), random.randint(5, 20) / 10, 0])
                     spell_hitboxes.append([spell[0], spell[1], spell[2], 1])
                 r_list.append(n)
             n += 1
@@ -1252,7 +1281,7 @@ while True:
         if event.type == QUIT:
             pygame.quit()
             sys.exit()
-        if current_level != 0:
+        if current_level > 0:
             if event.type == KEYDOWN:
                 if event.key == K_d:
                     right = True
@@ -1285,10 +1314,83 @@ while True:
             if event.type == MOUSEBUTTONUP:
                 if event.button == 1:
                     clicking = False
+        else:
+            if event.type == KEYDOWN:
+                if current_level == -1:
+                    current_level = 0
+                    c = 0
+                else:
+                    if event.key == pygame.K_w:
+                        c -= 1
+                    if event.key == pygame.K_s:
+                        c += 1
+                    if event.key == pygame.K_SPACE:
+                        if c == 0:
+                            current_level = 1
+                            load_level(entities, current_level)
+                        elif c == 1:
+                            with open("save.json", "r") as save:
+                                data = json.load(save)
+                            current_level = data["current_level"]
+                            load_level(entities, data["current_level"])
+    if current_level in (-1, 0):
+        if current_level == 0:
+            if c == 0:
+                new_game_img = pygame.image.load('data/images/new_game_text_2.png').convert()
+                new_game_img.set_colorkey((255, 255, 255))
+                exit_img = pygame.image.load('data/images/exit_text_4.png').convert()
+                exit_img.set_colorkey((255, 255, 255))
+                arena_img = pygame.image.load('data/images/arena_text_1.png').convert()
+                arena_img.set_colorkey((255, 255, 255))
+                continue_img = pygame.image.load('data/images/continue_text_4.png').convert()
+                continue_img.set_colorkey((255, 255, 255))
+                py = 78
+            elif c == 1:
+                new_game_img = pygame.image.load('data/images/new_game_text_1.png').convert()
+                new_game_img.set_colorkey((255, 255, 255))
+                exit_img = pygame.image.load('data/images/exit_text_4.png').convert()
+                exit_img.set_colorkey((255, 255, 255))
+                arena_img = pygame.image.load('data/images/arena_text_1.png').convert()
+                arena_img.set_colorkey((255, 255, 255))
+                continue_img = pygame.image.load('data/images/continue_text_3.png').convert()
+                continue_img.set_colorkey((255, 255, 255))
+                py = 88
+            elif c == 2:
+                new_game_img = pygame.image.load('data/images/new_game_text_1.png').convert()
+                new_game_img.set_colorkey((255, 255, 255))
+                exit_img = pygame.image.load('data/images/exit_text_4.png').convert()
+                exit_img.set_colorkey((255, 255, 255))
+                arena_img = pygame.image.load('data/images/arena_text_2.png').convert()
+                arena_img.set_colorkey((255, 255, 255))
+                continue_img = pygame.image.load('data/images/continue_text_4.png').convert()
+                continue_img.set_colorkey((255, 255, 255))
+                py = 100
+            elif c == 3:
+                new_game_img = pygame.image.load('data/images/new_game_text_1.png').convert()
+                new_game_img.set_colorkey((255, 255, 255))
+                exit_img = pygame.image.load('data/images/exit_text_3.png').convert()
+                exit_img.set_colorkey((255, 255, 255))
+                arena_img = pygame.image.load('data/images/arena_text_1.png').convert()
+                arena_img.set_colorkey((255, 255, 255))
+                continue_img = pygame.image.load('data/images/continue_text_4.png').convert()
+                continue_img.set_colorkey((255, 255, 255))
+                py = 114
+            elif c > 2:
+                c = 0
+            elif c < 0:
+                c = 2
 
-    display.blit(main_menu_background, (0, 0))
-    display.blit(logo, (27, 20))
-    display.blit(press_img, (50, 115))
+        display.blit(main_menu_background, (0, 0))
+        display.blit(logo, (27, 20))
+
+        if current_level == -1:
+            display.blit(press_img, (50, 115))
+        else:
+            display.blit(new_game_img, (95, 78))
+            display.blit(continue_img, (98, 88))
+            display.blit(arena_img, (106, 100))
+            display.blit(exit_img, (110, 114))
+            display.blit(knifes_img, (80, py))
 
     # Апдейты и всякая фигня
     screen.blit(pygame.transform.scale(display, (window_width, window_height)), (0, 0))
