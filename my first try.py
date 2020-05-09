@@ -110,6 +110,8 @@ def start_page():
                      width="50" height="50"></a></div>
                      <div class="under"><a href="https://www.instagram.com/chainloverrr/"><img src="static/img/inst.png" 
                      width="50" height="50"></a></div>
+                     <div class="under"><a href="https://github.com/RomanPodber/NazvaniePotomPridumaem">
+                     <img src="static/img/github.png" width="50" height="50"></a></div>
                     </div>
                    </div>
                   </body>
