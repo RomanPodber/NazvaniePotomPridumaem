@@ -83,7 +83,8 @@ def start_page():
                    Это основная страница нашего проекта</font></h2>
                    <p style="text-align:center; font-family: AnotherCastle3;"><font color="#a1f9ba" 
                    size=5>В игре зарегистрировано уже больше 10000000 человек<br>
-                   На этой странице вы можете установить игру, узнать о ней через Wiki,<br>а так же зарегистрироваться
+                   На этой странице вы можете установить игру, узнать о ней через нашу мини-Wiki,
+                   <br>а так же зарегистрироваться
                    или войти уже в существующий аккаунт</font></p>
                    <p style="text-align:center; font-family: AnotherCastle3;"><font color="#a1f9ba" 
                    size=5>Предлагаю собственноручно опробовать возможности нашего сайта</font></p>
@@ -94,7 +95,7 @@ def start_page():
                     </button>
                     <a class="button yell" href="http://127.0.0.16:8000/wikipedia">
                      <i class="fa fa-user-plus"></i>
-                     <span>Игровая википедия</span>
+                     <span>Об игре</span>
                     </a>
                     <a class="button mint" href="" download=les.png>
                      <i class="fa fa-user-plus"></i>
