@@ -61,7 +61,8 @@ def paused():
                 if event.key == pygame.K_w:
                     n -= 1
                 if event.key == pygame.K_s:
-                    n += 1
+                    n += 1 #авдцзвдцзвдцздв
+
         if n == 0:
             continue_text = pygame.image.load('data/images/continue_text_2.png').convert()
             continue_text.set_colorkey((255, 255, 255))
