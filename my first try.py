@@ -137,10 +137,20 @@ def wiki():
                         -moz-background-size:cover;
                         -o-background-size:cover;
                         background-size: cover;
+                    .under {
+                        margin-top: 150px;
+                        margin-right: 30px;
+                           }  
+                    div {
+                        background: #fc3; /* Цвет фона */
+                        border: 2px solid black; /* Параметры рамки */
+                        padding: 20px; /* Поля вокруг текста */
+                        margin-top: 20%; /* Отступ сверху */
+                        } 
                     </style>
                   </head>
                   <body>
-                   <h1 style="text-align:center; font-family: AnotherCastle3;"><font color="#00ff7f" 
+                   <h1 class="under" style="text-align:center; font-family: AnotherCastle3;"><font color="#00ff7f" 
                    size=7><center>ОБ ИГРЕ</center></font></h1>
                    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" 
                    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" 
@@ -158,7 +168,7 @@ def wiki():
                      <li data-target="#carousel-example-generic" data-slide-to="1"></li>
                      <li data-target="#carousel-example-generic" data-slide-to="2"></li>
                     </ol>
-                    <div class="carousel-inner" role="listbox" style="text-align:center;">
+                    <div class="carousel-inner role="listbox" style="text-align:center;">
                      <div class="carousel-item active">
                       <img src="static/img/mars1.jpg" alt="1">
                      </div>
