@@ -1368,6 +1368,67 @@ while True:
                 text_screen(last_frame, 'Vi pobedili')
             message_queue = [level_messages[current_level], 0, 0]
             load_level(entities, current_level)
+    else:
+        if current_level in (-1, 0):
+            if current_level == 0:
+                if c == 0:
+                    new_game_img = pygame.image.load('data/images/new_game_text_2.png').convert()
+                    new_game_img.set_colorkey((255, 255, 255))
+                    exit_img = pygame.image.load('data/images/exit_text_4.png').convert()
+                    exit_img.set_colorkey((255, 255, 255))
+                    arena_img = pygame.image.load('data/images/arena_text_1.png').convert()
+                    arena_img.set_colorkey((255, 255, 255))
+                    continue_img = pygame.image.load('data/images/continue_text_4.png').convert()
+                    continue_img.set_colorkey((255, 255, 255))
+                    py = 78
+                elif c == 1:
+                    new_game_img = pygame.image.load('data/images/new_game_text_1.png').convert()
+                    new_game_img.set_colorkey((255, 255, 255))
+                    exit_img = pygame.image.load('data/images/exit_text_4.png').convert()
+                    exit_img.set_colorkey((255, 255, 255))
+                    arena_img = pygame.image.load('data/images/arena_text_1.png').convert()
+                    arena_img.set_colorkey((255, 255, 255))
+                    continue_img = pygame.image.load('data/images/continue_text_3.png').convert()
+                    continue_img.set_colorkey((255, 255, 255))
+                    py = 88
+                elif c == 2:
+                    new_game_img = pygame.image.load('data/images/new_game_text_1.png').convert()
+                    new_game_img.set_colorkey((255, 255, 255))
+                    exit_img = pygame.image.load('data/images/exit_text_4.png').convert()
+                    exit_img.set_colorkey((255, 255, 255))
+                    arena_img = pygame.image.load('data/images/arena_text_2.png').convert()
+                    arena_img.set_colorkey((255, 255, 255))
+                    continue_img = pygame.image.load('data/images/continue_text_4.png').convert()
+                    continue_img.set_colorkey((255, 255, 255))
+                    py = 100
+                elif c == 3:
+                    new_game_img = pygame.image.load('data/images/new_game_text_1.png').convert()
+                    new_game_img.set_colorkey((255, 255, 255))
+                    exit_img = pygame.image.load('data/images/exit_text_3.png').convert()
+                    exit_img.set_colorkey((255, 255, 255))
+                    arena_img = pygame.image.load('data/images/arena_text_1.png').convert()
+                    arena_img.set_colorkey((255, 255, 255))
+                    continue_img = pygame.image.load('data/images/continue_text_4.png').convert()
+                    continue_img.set_colorkey((255, 255, 255))
+                    py = 114
+                elif c > 2:
+                    c = 0
+                elif c < 0:
+                    c = 2
+
+            display.blit(main_menu_background, (0, 0))
+            display.blit(logo, (27, 20))
+
+            if current_level == -1:
+                display.blit(press_img, (50, 115))
+            else:
+                display.blit(new_game_img, (95, 78))
+                display.blit(continue_img, (98, 88))
+                display.blit(arena_img, (106, 100))
+                display.blit(exit_img, (110, 114))
+                display.blit(knifes_img, (80, py))
+        if current_level == -2:
+            pass
 
     # Эвенты кнопок
     for event in pygame.event.get():
@@ -1427,67 +1488,9 @@ while True:
                             current_level = data["current_level"]
                             load_level(entities, data["current_level"])
                         elif c == 2:
-                            pass
+                            current_level = -2
                         elif c == 3:
                             terminate()
-    if current_level in (-1, 0):
-        if current_level == 0:
-            if c == 0:
-                new_game_img = pygame.image.load('data/images/new_game_text_2.png').convert()
-                new_game_img.set_colorkey((255, 255, 255))
-                exit_img = pygame.image.load('data/images/exit_text_4.png').convert()
-                exit_img.set_colorkey((255, 255, 255))
-                arena_img = pygame.image.load('data/images/arena_text_1.png').convert()
-                arena_img.set_colorkey((255, 255, 255))
-                continue_img = pygame.image.load('data/images/continue_text_4.png').convert()
-                continue_img.set_colorkey((255, 255, 255))
-                py = 78
-            elif c == 1:
-                new_game_img = pygame.image.load('data/images/new_game_text_1.png').convert()
-                new_game_img.set_colorkey((255, 255, 255))
-                exit_img = pygame.image.load('data/images/exit_text_4.png').convert()
-                exit_img.set_colorkey((255, 255, 255))
-                arena_img = pygame.image.load('data/images/arena_text_1.png').convert()
-                arena_img.set_colorkey((255, 255, 255))
-                continue_img = pygame.image.load('data/images/continue_text_3.png').convert()
-                continue_img.set_colorkey((255, 255, 255))
-                py = 88
-            elif c == 2:
-                new_game_img = pygame.image.load('data/images/new_game_text_1.png').convert()
-                new_game_img.set_colorkey((255, 255, 255))
-                exit_img = pygame.image.load('data/images/exit_text_4.png').convert()
-                exit_img.set_colorkey((255, 255, 255))
-                arena_img = pygame.image.load('data/images/arena_text_2.png').convert()
-                arena_img.set_colorkey((255, 255, 255))
-                continue_img = pygame.image.load('data/images/continue_text_4.png').convert()
-                continue_img.set_colorkey((255, 255, 255))
-                py = 100
-            elif c == 3:
-                new_game_img = pygame.image.load('data/images/new_game_text_1.png').convert()
-                new_game_img.set_colorkey((255, 255, 255))
-                exit_img = pygame.image.load('data/images/exit_text_3.png').convert()
-                exit_img.set_colorkey((255, 255, 255))
-                arena_img = pygame.image.load('data/images/arena_text_1.png').convert()
-                arena_img.set_colorkey((255, 255, 255))
-                continue_img = pygame.image.load('data/images/continue_text_4.png').convert()
-                continue_img.set_colorkey((255, 255, 255))
-                py = 114
-            elif c > 2:
-                c = 0
-            elif c < 0:
-                c = 2
-
-        display.blit(main_menu_background, (0, 0))
-        display.blit(logo, (27, 20))
-
-        if current_level == -1:
-            display.blit(press_img, (50, 115))
-        else:
-            display.blit(new_game_img, (95, 78))
-            display.blit(continue_img, (98, 88))
-            display.blit(arena_img, (106, 100))
-            display.blit(exit_img, (110, 114))
-            display.blit(knifes_img, (80, py))
 
     # Апдейты и всякая фигня
     screen.blit(pygame.transform.scale(display, (window_width, window_height)), (0, 0))
