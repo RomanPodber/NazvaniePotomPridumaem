@@ -55,11 +55,15 @@ def paused():
     while pause:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                with open("save.json", "w") as data:
+                    data.write(json.dumps({"current_level": current_level}, ensure_ascii=False))
                 terminate()
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     pause = False
                 if event.key == pygame.K_q:
+                    with open("save.json", "w") as data:
+                        data.write(json.dumps({"current_level": current_level}, ensure_ascii=False))
                     terminate()
                 if event.key == pygame.K_w:
                     n -= 1
@@ -77,17 +81,12 @@ def paused():
                             data.write(json.dumps({"current_level": current_level}, ensure_ascii=False))
 
                         pause = False
-                        fade_in = 10
                         message_queue = [level_messages[current_level], 0, 0]
                         current_level = 0
                         load_level(entities, current_level)
-
-                        if fade_in > 0:
-                            fade_in -= 1
-                            black_surf = pygame.Surface((240, 135))
-                            black_surf.set_alpha(int(255 * fade_in / 10))
-                            display.blit(black_surf, (0, 0))
                     elif n == 2:
+                        with open("save.json", "w") as data:
+                            data.write(json.dumps({"current_level": current_level}, ensure_ascii=False))
                         terminate()
 
         if n == 0:
@@ -156,14 +155,14 @@ font_dat = {'A': [3], 'B': [3], 'C': [3], 'D': [3], 'E': [3], 'F': [3], 'G': [3]
             '(': [2], ')': [2], '/': [3], '_': [5], '=': [3], '\\': [3], '[': [2], ']': [2], '*': [3], '"': [3],
             '<': [3], '>': [3], ';': [1], '%': [5]}
 
-font_white = text.generate_font('data/font/small_font.png', font_dat, 5, 8, (248, 248, 248))
-font_gold = text.generate_font('data/font/small_font.png', font_dat, 5, 8, (247, 172, 55))
-font_brown = text.generate_font('data/font/small_font.png', font_dat, 5, 8, (70, 33, 31))
-font_blue = text.generate_font('data/font/small_font.png', font_dat, 5, 8, (15, 77, 163))
+font_white = text.generate_font('data/font/small_font.png', font_dat, 5, 8, (222, 238, 214))
+font_gold = text.generate_font('data/font/small_font.png', font_dat, 5, 8, (218, 212, 94))
+font_brown = text.generate_font('data/font/small_font.png', font_dat, 5, 8, (117, 113, 97))
+font_blue = text.generate_font('data/font/small_font.png', font_dat, 5, 8, (89, 125, 206))
 # Картиночки враговБ игрока, окружения
 heart_img = pygame.image.load('data/images/heart.png').convert()
 heart_img.set_colorkey((255, 255, 255))
-background_img = pygame.image.load('data/images/background.png').convert()
+
 cast_marker_img = pygame.image.load('data/images/cast_marker.png').convert()
 cast_marker_img.set_colorkey((255, 255, 255))
 health_bar_img = pygame.image.load('data/images/health_bar.png').convert()
@@ -269,14 +268,50 @@ def swap_color(image_swap, old_c, new_c):
     return surf
 
 
+projectiles = []
+cor_n1 = 25
+cor_n2 = 0
+lvl_timer = 60
+
+
 def load_level(entities_load, current_level_load):
-    global levels
+    global levels, projectiles, cor_n1, cor_n2, entities, lvl_timer
+    alph = 0
+    cor_n1 = 25
+    cor_n2 = 0
+    lvl_timer = 60
+
+    projectiles.clear()
     if current_level_load > 0:
         for ent in levels[current_level_load]:
             entities_load.append(
                 e.Entity(ent[1], ent[2], entity_sizes[ent[0]][0], entity_sizes[ent[0]][1], ent[0]))
             if len(ent) == 4:
                 entities_load[-1].entity_data[ent[3]] = 1
+    if current_level in (4, 6, 7):
+        while 1:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    terminate()
+            black_surf_text = pygame.Surface((240, 135))
+            black_surf_text.fill(pygame.color.Color(20, 12, 28))
+            if alph != 255:
+                alph += 5
+            else:
+                break
+            black_surf_text.set_alpha(alph)
+            display.blit(black_surf_text, (0, 0))
+            pygame.display.update()
+            screen.blit(pygame.transform.scale(display, (window_width, window_height)), (0, 0))
+            mainClock.tick(60)
+    for entity in entities:
+        if entity.type == 'player':
+            if current_level == 1:
+                entity.set_pos(35, 60)
+            elif current_level == 4:
+                entity.set_pos(15, 60)
+            elif current_level in (6, 7):
+                entity.set_pos(117, 117)
 
 
 def text_screen(last_frame_text, screen_text):
@@ -288,6 +323,7 @@ def text_screen(last_frame_text, screen_text):
         if timer > 20:
             timer = 20
         black_surf_text = pygame.Surface((240, 135))
+        black_surf_text.fill(pygame.color.Color(20, 12, 28))
         black_surf_text.set_alpha(int(timer * 12.75))
         display.blit(black_surf_text, (0, 0))
         text.show_text(screen_text, 120 - int(get_text_width(screen_text, 1) / 2), 60, 1, 9999, font_white, display,
@@ -479,7 +515,7 @@ levels = {
         ['eye', 96, 80, 'rapid_fire']
     ],
     5: [
-        ['scarlet', 96, 60]
+        ['scarlet', 112, 24]
     ],
     6: [
         ['eye', 10, 10],
@@ -501,7 +537,7 @@ levels = {
         ['maw', 214, 10]
     ],
     9: [
-        ['jamician', 96, 60]
+        ['jamician', 112, 24]
     ]
 }
 # Инициализация (её нет)
@@ -522,8 +558,6 @@ load_level(entities, current_level)
 spell_hitboxes = []
 active_spells = []
 active_animations = []
-
-projectiles = []
 
 particles = []
 
@@ -587,6 +621,16 @@ while True:
             scroll[0] = -62
         if scroll[0] > 67:
             scroll[0] = 67
+
+        if current_level in (1, 2, 3):
+            background_img = pygame.image.load('data/images/backgrounds/background1.png').convert()
+        elif current_level in (4, 5):
+            background_img = pygame.image.load('data/images/backgrounds/background2.png').convert()
+        elif current_level == 6:
+            background_img = pygame.image.load('data/images/backgrounds/background3.png').convert()
+        elif current_level in (7, 8, 9):
+            background_img = pygame.image.load('data/images/backgrounds/background4.png').convert()
+
         display.blit(background_img, (-scroll[0] - 62, -scroll[1] - 69))
         # Передвижение
         player_movement = [0, 0]
@@ -621,7 +665,7 @@ while True:
         r_list = []
         n = 0
 
-        if mana_count < 20000:
+        if mana_count < 3:
             if current_level > 1:
                 if random.randint(1, 1) == 1:
                     entities.append(e.Entity(random.randint(6, 230), random.randint(6, 125), 10, 10, 'mana'))
@@ -1140,7 +1184,57 @@ while True:
                     offset = 1
                 display.blit(next_arrow_img, (226, 126 + offset))
 
+        # эффекты
+        if cor_n1 > 0 and current_level != 5:
+            cor_n1 -= 1
+            cor_n2 += 1
+        elif current_level == 5:
+            if cor_n1 > 0:
+                cor_n1 -= 1
+            if cor_n2 < 50:
+                cor_n2 += 1
+        if current_level == 1:
+            cor1 = pygame.image.load('data/images/effects/cor_1.png').convert()
+            cor1.set_alpha(25)
+        elif current_level == 2:
+            cor1 = pygame.image.load('data/images/effects/cor_2.png').convert()
+            cor1.set_alpha(cor_n2)
+            cor2 = pygame.image.load('data/images/effects/cor_1.png').convert()
+            cor2.set_alpha(cor_n1)
+        elif current_level == 3:
+            cor1 = pygame.image.load('data/images/effects/cor_3.png').convert()
+            cor1.set_alpha(cor_n2)
+            cor2 = pygame.image.load('data/images/effects/cor_2.png').convert()
+            cor2.set_alpha(cor_n1)
+        elif current_level == 4:
+            cor1 = pygame.image.load('data/images/effects/cor_3.png').convert()
+            cor1.set_alpha(25)
+        elif current_level == 5:
+            cor1 = pygame.image.load('data/images/effects/cor_3.png').convert()
+            cor1.set_alpha(cor_n2)
+            cor2 = pygame.image.load('data/images/effects/cor_4.png').convert()
+            cor2.set_alpha(cor_n1)
+        elif current_level == 6:
+            cor1 = pygame.image.load('data/images/effects/cor_6.png').convert()
+            cor1.set_alpha(75)
+        else:
+            cor1 = pygame.image.load('data/images/effects/cor_7.png').convert()
+            cor1.set_alpha(25)
+        display.blit(cor1, (0, 0))
+        if current_level in (2, 3, 5):
+            display.blit(cor2, (0, 0))
+        if current_level in range(1, 5):
+            sunshine = pygame.image.load('data/images/effects/sunshine.png').convert()
+            sunshine.set_colorkey((255, 255, 255))
+            sunshine.set_alpha(50)
+            display.blit(sunshine, (0, 0))
+
         # Интерфэйс
+        if lvl_timer > 0:
+            text.show_text(f'Level {current_level}', 120 - int(get_text_width(f'Level {current_level}', 1) / 2), 60, 1,
+                           9999, font_white, display)
+            lvl_timer -= 1
+
         if player.entity_data["health"] >= 1:
             display.blit(heart_img, (4, 3))
         if player.entity_data["health"] >= 2:
@@ -1150,7 +1244,7 @@ while True:
         if current_level > 1:
             display.blit(mana_bar_img, (2, 14))
             mana_surf = pygame.Surface((mana, 3))
-            mana_surf.fill((15, 77, 163))
+            mana_surf.fill((109, 194, 202))
             display.blit(mana_surf, (3, 15))
         else:
             mana = 100
@@ -1192,7 +1286,8 @@ while True:
 
         if fade_in > 0:
             fade_in -= 1
-            black_surf = pygame.Surface((240, 135))
+            black_surf = pygame.Surface((240, 135), pygame.color.Color(20, 12, 28))
+            black_surf.fill(pygame.color.Color(20, 12, 28))
             black_surf.set_alpha(int(255 * fade_in / 10))
             display.blit(black_surf, (0, 0))
 
@@ -1274,8 +1369,6 @@ while True:
             message_queue = [level_messages[current_level], 0, 0]
             load_level(entities, current_level)
 
-    else:
-        pass
     # Эвенты кнопок
     for event in pygame.event.get():
         if event.type == QUIT:
@@ -1333,6 +1426,10 @@ while True:
                                 data = json.load(save)
                             current_level = data["current_level"]
                             load_level(entities, data["current_level"])
+                        elif c == 2:
+                            pass
+                        elif c == 3:
+                            terminate()
     if current_level in (-1, 0):
         if current_level == 0:
             if c == 0:

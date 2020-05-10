@@ -24,7 +24,6 @@ def start_page():
                         text-align: center;
                         text-decoration: none;
                         margin-top: 150px;
-
                         cursor: pointer;
                         font-size: 16px;
                         font-family: ar_Aquaguy;
@@ -47,7 +46,6 @@ def start_page():
                     .button.mint {
                          background: #a1f9ba;
                                    }
-
                     .button:hover {
                          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
                                   }
