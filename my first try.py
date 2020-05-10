@@ -6,6 +6,7 @@ from data.users import RegisterForm, User
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'z_k.,k._zyltrc_kbwtq'
 
+
 def connecting():
     db_session.global_init("db/userstable.sqlite")
 
