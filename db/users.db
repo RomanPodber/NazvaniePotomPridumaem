@@ -1,0 +1,25 @@
+SQLite format 3   @                                                                     -�r
+   
+� A�
+�                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 ��qtablenewsnewsCREATE TABLE news (
+	id INTEGER NOT NULL,
+	title VARCHAR,
+	content VARCHAR,
+	created_date DATETIME,
+	is_private BOOLEAN,
+	user_id INTEGER,
+	PRIMARY KEY (id),
+	CHECK (is_private IN (0, 1)),
+	FOREIGN KEY(user_id) REFERENCES users (id)
+)R)sindexix_users_emailusersCREATE UNIQUE INDEX ix_users_email ON users (email)�<�WtableusersusersCREATE TABLE users (
+	id INTEGER NOT NULL,
+	name VARCHAR,
+	about VARCHAR,
+	email VARCHAR,
+	hashed_password VARCHAR,
+	created_date DATETIME,
+	PRIMARY KEY (id)
+)
+    
+    
+    
