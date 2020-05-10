@@ -621,9 +621,9 @@ while True:
         r_list = []
         n = 0
 
-        if mana_count < 3:
+        if mana_count < 20000:
             if current_level > 1:
-                if random.randint(1, 120) == 1:
+                if random.randint(1, 1) == 1:
                     entities.append(e.Entity(random.randint(6, 230), random.randint(6, 125), 10, 10, 'mana'))
 
         mana_count = 0
