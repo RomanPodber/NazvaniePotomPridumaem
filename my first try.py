@@ -1,7 +1,14 @@
 from flask import Flask
+from flask import Flask, redirect, render_template
+from data import db_session
+from data.users import RegisterForm, User
+
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = 'z_k.,k._zyltrc_kbwtq'
 
+def connecting():
+    db_session.global_init("db/userstable.sqlite")
 
 @app.route('/')
 def start_page():
@@ -89,9 +96,9 @@ def start_page():
                    <p style="text-align:center; font-family: AnotherCastle3;"><font color="#a1f9ba" 
                    size=5>Предлагаю собственноручно опробовать возможности нашего сайта</font></p>
                    <div style="text-align:center;">
-                    <button id="login" class="button pink">
+                    <button id="login" class="button pink" href="http://127.0.0.16:8000/register">
                      <i class="fa fa-unlock"></i>
-                     <span>Войти в аккаунт</span>
+                     <span>Вход и регистрация</span>
                     </button>
                     <a class="button yell" href="http://127.0.0.16:8000/wikipedia">
                      <i class="fa fa-user-plus"></i>
@@ -275,5 +282,29 @@ def download():
 
 
 
-if __name__ == '__main__':
+@app.route('/register')
+def register():
+    form = RegisterForm()
+    if form.validate_on_submit():
+        if form.password.data != form.password_again.data:
+            return render_template('register.html', title='Регистрация',
+                                    form=form,
+                                    message="Пароли не совпадают")
+        session = db_session.create_session()
+        if session.query(User).filter(User.email == form.email.data).first():
+            return render_template('register.html', title='Регистрация',
+                                    form=form,
+                                    message="Такой пользователь уже есть")
+        user = User(
+            name=form.name.data,
+            email=form.email.data,
+            about=form.about.data
+        )
+        user.set_password(form.password.data)
+        session.add(user)
+        session.commit()
+        return redirect('/login')
+    return render_template('register.html', title='Регистрация', form=form)
+
+if __name__ == "__main__":
     app.run(port=8000, host='127.0.0.16')
