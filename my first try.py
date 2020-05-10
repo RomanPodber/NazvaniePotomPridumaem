@@ -3,12 +3,9 @@ from data import db_session
 from data.users import RegisterForm, User
 
 
+
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'z_k.,k._zyltrc_kbwtq'
-
-
-def connecting():
-    db_session.global_init("db/userstable.sqlite")
 
 
 @app.route('/')
@@ -97,15 +94,15 @@ def start_page():
                    <p style="text-align:center; font-family: AnotherCastle3;"><font color="#a1f9ba" 
                    size=5>Предлагаю собственноручно опробовать возможности нашего сайта</font></p>
                    <div style="text-align:center;">
-                    <button id="login" class="button pink" href="http://127.0.0.16:8000/register">
+                    <a id="login" class="button pink" href="http://127.0.0.1:5000/reg">
                      <i class="fa fa-unlock"></i>
                      <span>Регистрация</span>
-                    </button>
-                    <a class="button yell" href="http://127.0.0.16:8000/wikipedia">
+                    </a>
+                    <a class="button yell" href="http://127.0.0.1:5000/wikipedia">
                      <i class="fa fa-user-plus"></i>
                      <span>Об игре</span>
                     </a>
-                    <a class="button mint" href="http://127.0.0.16:8000/download">
+                    <a class="button mint" href="http://127.0.0.1:5000/download">
                      <i class="fa fa-user-plus"></i>
                      <span>Установить игру</span>
                     </a>
@@ -283,19 +280,108 @@ def download():
                 </html>'''
 
 
-@app.route('/register')
-def register():
+@app.route('/congrats', methods=['GET', 'POST'])
+def congrat():
+    return '''<!doctype html>
+                    <html lang="en">
+                      <head>
+                       <title>Startpage</title>
+                        <style>
+                        html {
+                            background:url(static/img/main_pic2.png) no-repeat center center fixed;
+                             -webkit-background-size:cover;
+                             -moz-background-size:cover;
+                             -o-background-size:cover;
+                             background-size: cover;
+                              }
+                        .button {
+                            border: none;
+                            outline: none;
+                            display: inline-block;
+                            text-align: center;
+                            text-decoration: none;
+                            margin-top: 150px;
+
+                            cursor: pointer;
+                            font-size: 16px;
+                            font-family: AnotherCastle3;
+                            padding: 20px 26px;
+                            border-radius: 150px;
+                            color: #000;
+                                }
+                        .button i {
+                            margin-right: 4px;
+                                   }
+                        .button + .button {
+                            margin-left: 6px;
+                                          }
+                        .button.yell {
+                             background: #f9e6a1;
+                                       }
+                        .button.mint {
+                             background: #a1f9ba;
+                                       }
+
+                        .button:hover {
+                             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+                                      }
+                        .button:hover.yell {
+                             background: #fbecb9;
+                                              }
+                        .button:hover.mint {
+                             background: #b9fbcc;
+                                              }
+                        .button:active {
+                             box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+                             text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+                                       }
+                        .under {
+                            display: inline-block;
+                            margin-top: 150px;
+                            margin-right: 30px;
+                               }
+                        .text {
+                            margin-top: 250px;
+                            margin-right: 30px;
+                              }
+                        </style>
+                      </head>
+                      <body>
+                       <h1 class="text" style="text-align:center; font-family: AnotherCastle3;"><font color="#00ff7f" 
+                       size=7><center>Вы успешно прошли регистрацию!<br>
+                       Нажмите кнопку, чтобы вернуться в главное меню</center></font></h1>
+                       <div style="text-align: center">
+                        <a class="button yell" href="http://127.0.0.1:5000/">
+                         <i class="fa fa-user-plus"></i>
+                         <span>Вернуться в меню</span>
+                        </a>
+                       </div>
+                      </body>
+                    </html>'''
+
+
+def connecting(func):
+    db_session.global_init("db/userstable.sqlite")
+
+    def function():
+        func()
+    return function
+
+
+@connecting
+@app.route('/reg', methods=['GET', 'POST'])
+def reg():
     form = RegisterForm()
     if form.validate_on_submit():
         if form.password.data != form.password_again.data:
             return render_template('register.html', title='Регистрация',
-                                    form=form,
-                                    message="Пароли не совпадают")
+                                   form=form,
+                                   message="Пароли не совпадают")
         session = db_session.create_session()
         if session.query(User).filter(User.email == form.email.data).first():
             return render_template('register.html', title='Регистрация',
-                                    form=form,
-                                    message="Такой пользователь уже есть")
+                                   form=form,
+                                   message="Такой пользователь уже есть")
         user = User(
             name=form.name.data,
             email=form.email.data,
@@ -304,9 +390,8 @@ def register():
         user.set_password(form.password.data)
         session.add(user)
         session.commit()
-        return redirect('/login')
+        return redirect('/congrats')
     return render_template('register.html', title='Регистрация', form=form)
 
 
-if __name__ == "__main__":
-    app.run(port=8000, host='127.0.0.16')
+app.run()
