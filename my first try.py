@@ -1,4 +1,3 @@
-from flask import Flask
 from flask import Flask, redirect, render_template
 from data import db_session
 from data.users import RegisterForm, User
@@ -9,6 +8,7 @@ app.config['SECRET_KEY'] = 'z_k.,k._zyltrc_kbwtq'
 
 def connecting():
     db_session.global_init("db/userstable.sqlite")
+
 
 @app.route('/')
 def start_page():
@@ -98,7 +98,7 @@ def start_page():
                    <div style="text-align:center;">
                     <button id="login" class="button pink" href="http://127.0.0.16:8000/register">
                      <i class="fa fa-unlock"></i>
-                     <span>Вход и регистрация</span>
+                     <span>Регистрация</span>
                     </button>
                     <a class="button yell" href="http://127.0.0.16:8000/wikipedia">
                      <i class="fa fa-user-plus"></i>
@@ -139,8 +139,8 @@ def wiki():
                    <title>Startpage</title>
                     <style>
                     body {
-		                background: url(static/img/main_pic.png) no-repeat center center fixed; 
-		                -webkit-background-size:cover;
+		                 background: url(static/img/main_pic.png) no-repeat center center fixed; 
+		                 -webkit-background-size:cover;
                         -moz-background-size:cover;
                         -o-background-size:cover;
                         background-size: cover;
@@ -197,6 +197,7 @@ def wiki():
                    </div>
                   </body>
                 </html>'''
+
 
 @app.route('/download')
 def download():
@@ -281,7 +282,6 @@ def download():
                 </html>'''
 
 
-
 @app.route('/register')
 def register():
     form = RegisterForm()
@@ -305,6 +305,7 @@ def register():
         session.commit()
         return redirect('/login')
     return render_template('register.html', title='Регистрация', form=form)
+
 
 if __name__ == "__main__":
     app.run(port=8000, host='127.0.0.16')
