@@ -510,12 +510,12 @@ level_messages = {
     2: ['Using spells takes mana. Collect blue orbs to get more.'],
     3: ['Some real enemies are here now.'],
     4: ['!Meteor Crash', 'There\'s more!'],
-    5: ['The sorceress Scarlet wants to fight!'],
+    5: ['Hunter wants to fight!'],
     6: ['!Fire Blast', 'Buuuuurrrrrn...'],
     7: ['Beware of the Maws.'],
     8: ['!Protection', 'Now you have a non-offensive spell!'],
-    9: ['The Great Sorcerer, Jamician, wa nts to fight!'],
-    10: ["Lord wants to fight!"]
+    9: ['Lords minion wants to fight!'],
+    10: ["Lord wants to see you..."]
 }
 # Инфа о уровнях
 levels = {
