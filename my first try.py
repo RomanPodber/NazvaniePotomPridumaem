@@ -94,15 +94,15 @@ def start_page():
                    <p style="text-align:center; font-family: AnotherCastle3;"><font color="#a1f9ba" 
                    size=5>Предлагаю собственноручно опробовать возможности нашего сайта</font></p>
                    <div style="text-align:center;">
-                    <a id="login" class="button pink" href="http://127.0.0.1:5000/reg">
+                    <a id="login" class="button pink" href="http://127.0.0.16:8000/reg">
                      <i class="fa fa-unlock"></i>
                      <span>Регистрация</span>
                     </a>
-                    <a class="button yell" href="http://127.0.0.1:5000/wikipedia">
+                    <a class="button yell" href="http://127.0.0.16:8000/wikipedia">
                      <i class="fa fa-user-plus"></i>
                      <span>Об игре</span>
                     </a>
-                    <a class="button mint" href="http://127.0.0.1:5000/download">
+                    <a class="button mint" href="http://127.0.0.16:8000/download">
                      <i class="fa fa-user-plus"></i>
                      <span>Установить игру</span>
                     </a>
@@ -111,9 +111,9 @@ def start_page():
                      height="50"></a></div>
                      <div class="under"><a href="https://vk.com/hellother"><img src="static/img/vk.png" width="50" 
                      height="50"></a></div>
-                     <div class="under"><a href="https://www.instagram.com/_just_roman__/"><img src="static/img/inst.png" 
-                     width="50" height="50"></a></div>
                      <div class="under"><a href="https://www.instagram.com/chainloverrr/"><img src="static/img/inst.png" 
+                     width="50" height="50"></a></div>
+                     <div class="under"><a href="https://www.instagram.com/_just_roman__/"><img src="static/img/inst.png" 
                      width="50" height="50"></a></div>
                      <div class="under"><a href="https://github.com/RomanPodber/NazvaniePotomPridumaem">
                      <img src="static/img/github.png" width="50" height="50"></a></div>
@@ -143,22 +143,36 @@ def wiki():
                         -o-background-size:cover;
                         background-size: cover;
                     .under {
-                        margin-top: 150px;
+                        margin-top: 350px;
                         margin-right: 30px;
                            }  
-                    div {
-                        background: #fc3; /* Цвет фона */
-                        border: 2px solid black; /* Параметры рамки */
-                        padding: 20px; /* Поля вокруг текста */
-                        margin-top: 20%; /* Отступ сверху */
-                        } 
                     </style>
                   </head>
                   <body>
                    <h1 class="under" style="text-align:center; font-family: AnotherCastle3;"><font color="#00ff7f" 
                    size=7><center>ОБ ИГРЕ</center></font></h1>
-                   <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" 
-                   integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" 
+                   <h2 class="under" style="text-align:center; font-family: AnotherCastle3;"><font color="#00ff7f" 
+                   size=7><center>Боевая система</center></font></h2>
+                   <h2 style="display: inline-block; margin-top:50px margin-bottom:300px">
+                       <p style="text-align:left; font-family: AnotherCastle3;left:10px;top:110px margin-left:100px">
+                       <font color="#a1f9ba" 
+                       size=4.5>Боевая система - это "изюминка" нашего проекта.<br>
+                       Пользователь по мере продвижения по игровому процессу, <br>
+                       Открывает новые заклинания, для активации которых игрок <br>
+                       Должен самостоятельно вызвать магию в особом поле<br>
+                       Для кастования магии нужна мана, очки которой рандомно появляются на поле</font></p>
+                       <img src = "static/img/pattern.jpg" tab="photo" 
+                       style="position:absolute;right:10px;top:150px" width=347 height=195>
+                   </h2>
+                   <h3 style="text-align:center; font-family: AnotherCastle3; margin-top:100px;"><font color="#00ff7f" 
+                   size=7><center>История мира</center></font></h3>
+                    <h3>
+                       <p style="text-align:center; font-family: AnotherCastle3;left:10px;top:110px margin-left:100px">
+                       <font color="#a1f9ba" 
+                       size=4.5>Кароче наш чел ненавидит черных<p>
+                    </h3>
+                    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" 
+                    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" 
                    crossorigin="anonymous"></script>
                    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" 
                    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" 
@@ -167,21 +181,25 @@ def wiki():
                    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" 
                    crossorigin="anonymous"></script>
                    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel" 
-                   style="text-align:center;">
+                   style="text-align:center; margin-top:50px">
                     <ol class="carousel-indicators">
                      <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
                      <li data-target="#carousel-example-generic" data-slide-to="1"></li>
                      <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                     <li data-target="#carousel-example-generic" data-slide-to="3"></li>
                     </ol>
                     <div class="carousel-inner role="listbox" style="text-align:center;">
                      <div class="carousel-item active">
-                      <img src="static/img/mars1.jpg" alt="1">
+                      <img src="static/img/1slide.jpg" alt="1">
                      </div>
                      <div class="carousel-item" style="text-align:center;">
-                      <img src="static/img/mars2.jpg" alt="2">
+                      <img src="static/img/2slide.jpg" alt="2">
                      </div>
                      <div class="carousel-item" style="text-align:center;">
-                      <img src="static/img/mars3.jpg" alt="3">
+                      <img src="static/img/3slide.jpg" alt="3">
+                     </div>
+                     <div class="carousel-item" style="text-align:center;">
+                      <img src="static/img/4slide.jpg" alt="3">
                      </div>
                     </div>
                     <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
@@ -351,7 +369,7 @@ def congrat():
                        size=7><center>Вы успешно прошли регистрацию!<br>
                        Нажмите кнопку, чтобы вернуться в главное меню</center></font></h1>
                        <div style="text-align: center">
-                        <a class="button yell" href="http://127.0.0.1:5000/">
+                        <a class="button yell" href="http://127.0.0.16:8000/">
                          <i class="fa fa-user-plus"></i>
                          <span>Вернуться в меню</span>
                         </a>
@@ -394,4 +412,5 @@ def reg():
     return render_template('register.html', title='Регистрация', form=form)
 
 
-app.run()
+if __name__ == "__main__":
+    app.run(port=8000, host="127.0.0.16")
