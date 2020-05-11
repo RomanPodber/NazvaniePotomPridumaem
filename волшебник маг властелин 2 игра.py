@@ -55,6 +55,7 @@ def paused():
 
     n = 0
     py = 44
+
     while pause:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
