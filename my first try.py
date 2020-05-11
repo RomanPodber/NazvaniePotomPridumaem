@@ -169,8 +169,67 @@ def wiki():
                     <h3>
                        <p style="text-align:center; font-family: AnotherCastle3;left:10px;top:110px margin-left:100px">
                        <font color="#a1f9ba" 
-                       size=4.5>Кароче наш чел ненавидит черных<p>
+                       size=4.5>Давным-давно в стране K (Казахстан), на город В (Варшава), напали властелины тьмы.<br>
+                       Они убили всех, кроме главного героя, который из-за перенесенных ужасов (работал на угольных шахтах)
+                       переродился в скелета и отправился мстить за свою семью.<br>
+                       Ему предстоит пройти через множество испытаний, чтобы встретиться 
+                       с властелином тьмы - самим воплощением ужаса.<p>
                     </h3>
+                    <h2 class="under" style="text-align:center; font-family: AnotherCastle3;"><font color="#00ff7f" 
+                   size=7><center>Персонажи и мобы</center></font></h2>
+                   <h2 style="display: inline-block; margin-top:50px margin-bottom:300px">
+                       <p style="text-align:left; font-family: AnotherCastle3;left:10px;top:110px margin-left:100px">
+                       <font color="#a1f9ba" 
+                       size=4.5>Охотник<br>
+                       Это самый первый босс, он обрел свои способности благодаря укусу летучей мыши<br>
+                       Здоровье: 25ед.<br>
+                       Количество атак: 2шт.<br>
+                       Опасность: Средняя<br>
+                       Является стражем подземелья</font></p>
+                       <img src = "static/img/boss1.png" tab="photo" 
+                       style="position:absolute;right:10px;top:720px" width=250 height=250>
+                       <p style="text-align:left; font-family: AnotherCastle3;left:10px;top:150px margin-left:100px">
+                       <font color="#a1f9ba" 
+                       size=4.5>Миньон лорда<br>
+                       Самый верный слуга властелина тьмы, в прошлом - пекарь в захваченном городе<br>
+                       Здоровье: 50ед.<br>
+                       Количество атак: 2шт.<br>
+                       Опасность: Высокая<br>
+                       Любит солизняков.</font></p>
+                       <img src = "static/img/boss2.png" tab="photo" 
+                       style="position:absolute;right:10px;top:980px" width=250 height=250>
+                       <p style="text-align:left; font-family: AnotherCastle3;left:10px;top:150px margin-left:100px">
+                       <font color="#a1f9ba" 
+                       size=4.5>Властелин тьмы<br>
+                       Само воплощение зла, был партнером главного героя на шахтах<br>
+                       Здоровье: 100ед.<br>
+                       Количество атак: 3шт.<br>
+                       Опасность: Пройти невозможно<br>
+                       Жуткий тип. Само воплощение мрака и агрессии в нашем мире</font></p>
+                       <img src = "static/img/boss3.png" tab="photo" 
+                       style="position:absolute;right:10px;top:1240px" width=250 height=250>
+                       <p style="text-align:left; font-family: AnotherCastle3;left:10px;top:150px margin-left:100px">
+                       <font color="#a1f9ba" 
+                       size=4.5>Слизняк<br>
+                       Не самый легкий моб, друган Миньона<br>
+                       Здоровье: 9ед.<br>
+                       Количество атак: 1шт.<br>
+                       Опасность: Низкая<br>
+                       Скользкий тип, на первый взгляд безобидный моб, который может задать жару</font></p>
+                       <img src = "static/img/mob1.png" tab="photo" 
+                       style="position:absolute;right:10px;top:1500px" width=250 height=250>
+                       <p style="text-align:left; font-family: AnotherCastle3;left:10px;top:150px margin-left:100px">
+                       <font color="#a1f9ba" 
+                       size=4.5>Летучая мышь<br>
+                       Самый безобидный и простой противник<br>
+                       Здоровье: 5ед.<br>
+                       Количество атак: 1шт.<br>
+                       Опасность: Очень низкая<br>
+                       Самый простой, практически безобидный моб, с которым все-таки<br>
+                       надо быть аккуратней.</font></p>
+                       <img src = "static/img/mob2.png" tab="photo" 
+                       style="position:absolute;right:10px;top:1740px" width=250 height=250>
+                   </h2>
                     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" 
                     integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" 
                    crossorigin="anonymous"></script>
