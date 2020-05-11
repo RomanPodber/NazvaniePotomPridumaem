@@ -1,3 +1,0 @@
-flask
-data
-gunicorn==20.0.4
