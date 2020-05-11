@@ -73,6 +73,7 @@ def paused():
                 if event.key == pygame.K_s:
                     n += 1
                 if event.key == pygame.K_SPACE:
+                    text_next_s.play()
                     if n == 0:
                         pause = False
                     elif n == 1:
@@ -220,8 +221,9 @@ jamician_atk_1_s = pygame.mixer.Sound('data/sfx/jamician_atk_1.wav')
 jamician_atk_2_s = pygame.mixer.Sound('data/sfx/jamician_atk_2.wav')
 scarlet_atk_1_s = pygame.mixer.Sound('data/sfx/scarlet_atk_1.wav')
 scarlet_atk_2_s = pygame.mixer.Sound('data/sfx/scarlet_atk_2.wav')
-king_atk_1_s = pygame.mixer.Sound('data/sfx/scarlet_atk_1.wav')
-king_atk_2_s = pygame.mixer.Sound('data/sfx/scarlet_atk_2.wav')
+king_atk_1_s = pygame.mixer.Sound('data/sfx/king_atk_1.wav')
+king_atk_2_s = pygame.mixer.Sound('data/sfx/king_atk_2.wav')
+king_atk_3_s = pygame.mixer.Sound('data/sfx/king_atk_3.wav')
 maw_shoot_s = pygame.mixer.Sound('data/sfx/maw_shoot.wav')
 meteor_crash_s = pygame.mixer.Sound('data/sfx/meteor_crash.wav')
 new_spell_s = pygame.mixer.Sound('data/sfx/new_spell.wav')
@@ -282,7 +284,7 @@ lvl_timer = 60
 
 
 def load_level(entities_load, current_level_load):
-    global levels, projectiles, cor_n1, cor_n2, entities, lvl_timer
+    global levels, projectiles, cor_n1, cor_n2, entities, lvl_timer, what_plays_now
     alph = 0
     cor_n1 = 25
     cor_n2 = 0
@@ -602,9 +604,8 @@ casting_spell = [False, [0, 0], [], 0, [0, 0]]  # active, location, line history
 
 last_frame = None
 # Цикл щас начнётся
-pygame.mixer.music.load('data/music/main.mp3')
-pygame.mixer.music.play(-1)
-# pygame.mixer.music.set_volume(1)
+what_plays_now = "-"
+vol = 1
 
 main_menu_background = pygame.image.load('data/images/main_menu_background.png').convert()
 logo = pygame.image.load('data/images/logo.png').convert()
@@ -617,6 +618,23 @@ knifes_img = pygame.image.load('data/images/knifes.png').convert()
 knifes_img.set_colorkey((255, 255, 255))
 
 while True:
+    pygame.mixer.music.set_volume(vol)
+    if current_level in (1, 2, 3, 4, 5) and what_plays_now != "XARAKTER - VIP2":
+        pygame.mixer.music.load('data/music/XARAKTER - VIP2.mp3')
+        what_plays_now = "XARAKTER - VIP2"
+        pygame.mixer.music.play(-1)
+    elif current_level in (6, 7, 8, 9) and what_plays_now != "XARAKTER - VIP7":
+        pygame.mixer.music.load('data/music/XARAKTER - VIP7.mp3')
+        what_plays_now = "XARAKTER - VIP7"
+        pygame.mixer.music.play(-1)
+    elif current_level == 10 and what_plays_now != "XARAKTER - VIP4":
+        pygame.mixer.music.load('data/music/XARAKTER - VIP4.mp3')
+        what_plays_now = "XARAKTER - VIP4"
+        pygame.mixer.music.play(-1)
+    elif current_level in (-1, 0) and what_plays_now != "main":
+        pygame.mixer.music.load('data/music/main.mp3')
+        what_plays_now = "main"
+        pygame.mixer.music.play(-1)
     if current_level > 0:
         # Позиция иышки
         mx, my = pygame.mouse.get_pos()
@@ -874,16 +892,14 @@ while True:
                             entity.set_action('idle')
                     if entity.action == 'attack_1':
                         if entity.entity_data['cycle_timer'][0] == 1:
-                            if random.randint(1, 4) == 1:
-                                if len(entities) < 7:
-                                    if random.randint(1, 2) == 1:
-                                        entities.append(
-                                            e.Entity(random.randint(0, 220), random.randint(0, 120), 16, 16, 'eye'))
-                                    else:
-                                        entities.append(
-                                            e.Entity(random.randint(0, 220), random.randint(0, 120), 17, 18, 'maw'))
+                            if len(entities) < 7:
+                                if random.randint(1, 2) == 1:
+                                    entities.append(
+                                        e.Entity(random.randint(0, 220), random.randint(0, 120), 16, 16, 'eye'))
+                                else:
+                                    entities.append(
+                                        e.Entity(random.randint(0, 220), random.randint(0, 120), 17, 18, 'maw'))
 
-                            else:
                                 king_atk_1_s.play()
                                 for i in range(48):
                                     projectiles.append([entity.get_center()[0], entity.get_center()[1],
@@ -915,7 +931,7 @@ while True:
                                  random.choice([(120, 31, 44), (53, 20, 40)])])
                     if entity.action == 'attack_3':
                         if entity.entity_data['cycle_timer'][0] == 1:
-                            jamician_atk_2_s.play()
+                            king_atk_3_s.play()
                             for i in range(160):
                                 projectiles.append([entity.get_center()[0], entity.get_center()[1], math.radians(i * 6),
                                                     random.randint(12, 15) / 30, 0])
@@ -1594,6 +1610,12 @@ while True:
                     down = True
                 if event.key == pygame.K_ESCAPE:
                     paused()
+                if event.key == pygame.K_DOWN:
+                    if vol > 0:
+                        vol -= 0.1
+                if event.key == pygame.K_UP:
+                    if vol <= 1:
+                        vol += 0.1
 
             if event.type == KEYUP:
                 if event.key == K_d:
@@ -1626,6 +1648,7 @@ while True:
                     if event.key == pygame.K_s:
                         c += 1
                     if event.key == pygame.K_SPACE:
+                        text_next_s.play()
                         if current_level == 0:
                             if c == 0:
                                 current_level = 1
@@ -1633,8 +1656,9 @@ while True:
                             elif c == 1:
                                 with open("save.json", "r") as save:
                                     data = json.load(save)
-                                current_level = data["current_level"]
-                                load_level(entities, data["current_level"])
+                                if data["current_level"] != 0:
+                                    current_level = data["current_level"]
+                                    load_level(entities, data["current_level"])
                             elif c == 2:
                                 pass
                             elif c == 3:
