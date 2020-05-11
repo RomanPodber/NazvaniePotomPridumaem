@@ -57,17 +57,22 @@ def paused():
     py = 44
 
     while pause:
+        with open("save.json", "r") as save:
+            data = json.load(save)
+        login = data["login"]
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 with open("save.json", "w") as data:
-                    data.write(json.dumps({"current_level": current_level}, ensure_ascii=False))
+                    data.write(json.dumps({"current_level": current_level,
+                                           "login": login}, ensure_ascii=False))
                 terminate()
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     pause = False
                 if event.key == pygame.K_q:
                     with open("save.json", "w") as data:
-                        data.write(json.dumps({"current_level": current_level}, ensure_ascii=False))
+                        data.write(json.dumps({"current_level": current_level,
+                                               "login": login}, ensure_ascii=False))
                     terminate()
                 if event.key == pygame.K_w:
                     n -= 1
@@ -83,7 +88,8 @@ def paused():
                                 entity.entity_data['health'] = 0
 
                         with open("save.json", "w") as data:
-                            data.write(json.dumps({"current_level": current_level}, ensure_ascii=False))
+                            data.write(json.dumps({"current_level": current_level,
+                                                   "login": login}, ensure_ascii=False))
 
                         pause = False
                         message_queue = [level_messages[current_level], 0, 0]
@@ -91,7 +97,8 @@ def paused():
                         load_level(entities, current_level)
                     elif n == 2:
                         with open("save.json", "w") as data:
-                            data.write(json.dumps({"current_level": current_level}, ensure_ascii=False))
+                            data.write(json.dumps({"current_level": current_level,
+                                                   "login": login}, ensure_ascii=False))
                         terminate()
 
         if n == 0:
