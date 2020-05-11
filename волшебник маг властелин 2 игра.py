@@ -6,10 +6,11 @@ import math
 import os
 import pygame
 import random
-import socket
+# import socket Первая причина моего психоза в 16
 import sys
 import time
 import json
+# import threading Вторая причина моего психоза в 16
 
 from pygame.locals import *
 
@@ -25,6 +26,8 @@ window_height = 405
 screen = pygame.display.set_mode((window_width, window_height), 0, 32)
 display = pygame.Surface((240, 135))
 
+
+# sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 # Шрифт
 def get_text_width(text, spacing):
@@ -183,7 +186,9 @@ scarlet_img = pygame.image.load('data/images/boss_portraits/scarlet.png').conver
 scarlet_img.set_colorkey((255, 255, 255))
 jamician_img = pygame.image.load('data/images/boss_portraits/jamician.png').convert()
 jamician_img.set_colorkey((255, 255, 255))
-boss_portraits = {'scarlet': scarlet_img, 'jamician': jamician_img}
+king_img = pygame.image.load('data/images/boss_portraits/king.png').convert()
+king_img.set_colorkey((255, 255, 255))
+boss_portraits = {'scarlet': scarlet_img, 'jamician': jamician_img, "king": king_img}
 boss_bar_img = pygame.image.load('data/images/boss_bar.png').convert()
 boss_bar_img.set_colorkey((255, 255, 255))
 
@@ -215,6 +220,8 @@ jamician_atk_1_s = pygame.mixer.Sound('data/sfx/jamician_atk_1.wav')
 jamician_atk_2_s = pygame.mixer.Sound('data/sfx/jamician_atk_2.wav')
 scarlet_atk_1_s = pygame.mixer.Sound('data/sfx/scarlet_atk_1.wav')
 scarlet_atk_2_s = pygame.mixer.Sound('data/sfx/scarlet_atk_2.wav')
+king_atk_1_s = pygame.mixer.Sound('data/sfx/scarlet_atk_1.wav')
+king_atk_2_s = pygame.mixer.Sound('data/sfx/scarlet_atk_2.wav')
 maw_shoot_s = pygame.mixer.Sound('data/sfx/maw_shoot.wav')
 meteor_crash_s = pygame.mixer.Sound('data/sfx/meteor_crash.wav')
 new_spell_s = pygame.mixer.Sound('data/sfx/new_spell.wav')
@@ -379,6 +386,7 @@ def learn_spell(last_frame, spell_id):
         if scroll_y > 135:
             break
 
+
 timer = 0
 # Инфа о врагах, спэллах
 entity_defaults = {
@@ -435,7 +443,15 @@ entity_defaults = {
         'speed': 0,
         'cycle_timer': [0, 'idle'],
         'teleportation': 0
-    }
+    },
+    'king': {
+        'boss': 1,
+        'hurt_timer': 0,
+        'spawn_timer': 0,
+        'health': 100,
+        'speed': 3,
+        'cycle_timer': [0, 'idle'],
+        'ghost_angle': 0}
 }
 
 entity_offsets = {
@@ -445,7 +461,8 @@ entity_offsets = {
     'mana': [0, 0],
     'scarlet': [0, 0],
     'maw': [0, 0],
-    'jamician': [0, 0]
+    'jamician': [0, 0],
+    'king': [0, 0]
 }
 
 entity_sizes = {
@@ -455,7 +472,8 @@ entity_sizes = {
     'mana': [10, 10],
     'scarlet': [17, 22],
     'maw': [17, 18],
-    'jamician': [16, 26]
+    'jamician': [16, 26],
+    'king': [17, 22],
 }
 
 spells = {
@@ -493,7 +511,8 @@ level_messages = {
     6: ['!Fire Blast', 'Buuuuurrrrrn...'],
     7: ['Beware of the Maws.'],
     8: ['!Protection', 'Now you have a non-offensive spell!'],
-    9: ['The Great Sorcerer, Jamician, wants to fight!']
+    9: ['The Great Sorcerer, Jamician, wa nts to fight!'],
+    10: ["Lord wants to fight!"]
 }
 # Инфа о уровнях
 levels = {
@@ -538,8 +557,12 @@ levels = {
     ],
     9: [
         ['jamician', 112, 24]
+    ],
+    10: [
+         ['king', 112, 24]
     ]
 }
+
 # Инициализация (её нет)
 e.load_animations('data/images/entities/')
 # Переменные
@@ -628,7 +651,7 @@ while True:
             background_img = pygame.image.load('data/images/backgrounds/background2.png').convert()
         elif current_level == 6:
             background_img = pygame.image.load('data/images/backgrounds/background3.png').convert()
-        elif current_level in (7, 8, 9):
+        elif current_level in (7, 8, 9, 10):
             background_img = pygame.image.load('data/images/backgrounds/background4.png').convert()
 
         display.blit(background_img, (-scroll[0] - 62, -scroll[1] - 69))
@@ -765,7 +788,7 @@ while True:
                 entity.change_frame(1)
                 if entity.entity_data['spawn_timer'] > 60:
                     if entity.entity_data['cycle_timer'][1] == 'idle':
-                        if random.randint(1, 120) == 1:
+                        if random.randint(1, 90) == 1:
                             if random.randint(1, 2) == 1:
                                 entity.entity_data['cycle_timer'] = [120, 'attack_1']
                                 entity.set_action('attack_1')
@@ -784,7 +807,7 @@ while True:
                             entity.set_action('idle')
                     if entity.action == 'attack_1':
                         if (entity.entity_data['cycle_timer'][0] + 20) % 30 == 0:
-                            for i in range(10):
+                            for i in range(25):
                                 particles.append([entity.x + 14, entity.y + entity.size_y, math.radians(i * 18),
                                                   random.randint(5, 15) / 10, random.randint(0, 20) / 10,
                                                   random.randint(100, 200) / 1000,
@@ -823,6 +846,88 @@ while True:
                                  random.choice([(120, 31, 44), (53, 20, 40)])])
                     else:
                         entity.offset[0] = 0
+
+            if entity.type == 'king':
+                current_boss = ['king', entity.entity_data['health'] / 100]
+                entity.change_frame(1)
+                if entity.entity_data['spawn_timer'] > 60:
+                    if entity.entity_data['cycle_timer'][1] == 'idle':
+                        if random.randint(1, 120) == 1:
+                            if random.randint(1, 2) == 1:
+                                entity.entity_data['cycle_timer'] = [120, 'attack_1']
+                                entity.set_action('attack_1')
+                            elif random.randint(1, 2) == 1:
+                                entity.entity_data['cycle_timer'] = [180, 'attack_2']
+                                entity.set_action('attack_2')
+                                king_atk_2_s.play()
+                            elif random.randint(1, 2) == 1:
+                                entity.entity_data['cycle_timer'] = [180, 'attack_3']
+                                entity.set_action('attack_3')
+                            else:
+                                entity.entity_data['cycle_timer'] = [60, 'ghost']
+                                entity.set_action('ghost')
+                                entity.entity_data['ghost_angle'] = math.radians(random.randint(0, 360))
+                    if entity.entity_data['cycle_timer'][0] > 0:
+                        entity.entity_data['cycle_timer'][0] -= 1
+                        if entity.entity_data['cycle_timer'][0] == 0:
+                            entity.entity_data['cycle_timer'][1] = 'idle'
+                            entity.set_action('idle')
+                    if entity.action == 'attack_1':
+                        if entity.entity_data['cycle_timer'][0] == 1:
+                            if random.randint(1, 4) == 1:
+                                if len(entities) < 7:
+                                    if random.randint(1, 2) == 1:
+                                        entities.append(
+                                            e.Entity(random.randint(0, 220), random.randint(0, 120), 16, 16, 'eye'))
+                                    else:
+                                        entities.append(
+                                            e.Entity(random.randint(0, 220), random.randint(0, 120), 17, 18, 'maw'))
+
+                            else:
+                                king_atk_1_s.play()
+                                for i in range(48):
+                                    projectiles.append([entity.get_center()[0], entity.get_center()[1],
+                                                        get_entity_angle(entity, player) + math.radians(
+                                                            random.randint(0, 90) - 45), random.randint(5, 15) / 7, 0])
+                    if entity.action == 'ghost':
+                        if entity.entity_data['cycle_timer'][0] < 20:
+                            entity_movement = [
+                                math.cos(entity.entity_data['ghost_angle']) * entity.entity_data['speed'],
+                                math.sin(entity.entity_data['ghost_angle']) * entity.entity_data['speed']]
+                            entity.move(entity_movement, [], [])
+                            particles.append([entity.x + 9, entity.y + 11, math.radians(random.randint(0, 360)),
+                                              random.randint(0, 20) / 100, random.randint(10, 20) / 10,
+                                              random.randint(100, 200) / 1000,
+                                              random.choice([(38, 36, 58), (20, 16, 32)])])
+                            if entity.entity_data['cycle_timer'][0] == 1:
+                                entity.entity_data['cycle_timer'] = [39, 'reverse_ghost']
+                                entity.set_action('reverse_ghost')
+                    if entity.action == 'attack_2':
+                        entity.offset[0] = random.randint(0, 4) - 2
+                        if entity.entity_data['cycle_timer'][0] % 1 == 0:
+                            projectiles.append([entity.get_center()[0], entity.get_center()[1],
+                                                math.radians(entity.entity_data['cycle_timer'][0] * 16),
+                                                random.randint(5, 45) / 15, 0])
+                            particles.append(
+                                [entity.x - 6 + random.randint(0, 22), entity.y + entity.size_y + 3, math.pi * 3 / 2,
+                                 random.randint(4, 12) / 10, random.randint(10, 20) / 10,
+                                 random.randint(100, 200) / 1000,
+                                 random.choice([(120, 31, 44), (53, 20, 40)])])
+                    if entity.action == 'attack_3':
+                        if entity.entity_data['cycle_timer'][0] == 1:
+                            jamician_atk_2_s.play()
+                            for i in range(160):
+                                projectiles.append([entity.get_center()[0], entity.get_center()[1], math.radians(i * 6),
+                                                    random.randint(12, 15) / 30, 0])
+                            for i in range(40):
+                                particles.append(
+                                    [entity.x - 2 + random.randint(0, 19),
+                                     entity.y + entity.size_y - random.randint(0, 10),
+                                     math.radians(270), random.randint(4, 7) / 10, random.randint(4, 7) / 10,
+                                     random.randint(100, 200) / 1000, random.choice([(19, 178, 242), (65, 243, 252)])])
+                    else:
+                        entity.offset[0] = 0
+
             if entity.type == 'maw':
                 if entity.entity_data['spawn_timer'] > 60:
                     entity.entity_data['cycle_timer'] -= 1
@@ -1055,7 +1160,8 @@ while True:
                                  (entity.x + int(entity.size_x / 2) - 8 - scroll[0], entity.y - 7 - scroll[1]))
                     health_surf = pygame.Surface(
                         (
-                        minimum(int(entity.entity_data['health'] / entity_defaults[entity.type]['health'] * 15), 1), 2))
+                            minimum(int(entity.entity_data['health'] / entity_defaults[entity.type]['health'] * 15), 1),
+                            2))
                     health_surf.fill((196, 44, 54))
                     display.blit(health_surf,
                                  (entity.x + int(entity.size_x / 2) - 7 - scroll[0], entity.y - 6 - scroll[1]))
@@ -1360,11 +1466,11 @@ while True:
         # Конец уровня
         enemy_count = 0
         for entity in entities:
-            if entity.type not in ['mana', 'player']:
+            if entity.type not in ['mana', 'player'] and current_level != 16:
                 enemy_count += 1
         if enemy_count == 0:
             current_level += 1
-            if current_level == 10:
+            if current_level == 11:
                 text_screen(last_frame, 'Vi pobedili')
             message_queue = [level_messages[current_level], 0, 0]
             load_level(entities, current_level)
@@ -1380,7 +1486,7 @@ while True:
                     arena_img.set_colorkey((255, 255, 255))
                     continue_img = pygame.image.load('data/images/continue_text_4.png').convert()
                     continue_img.set_colorkey((255, 255, 255))
-                    py = 78
+                    py = 77
                 elif c == 1:
                     new_game_img = pygame.image.load('data/images/new_game_text_1.png').convert()
                     new_game_img.set_colorkey((255, 255, 255))
@@ -1390,7 +1496,7 @@ while True:
                     arena_img.set_colorkey((255, 255, 255))
                     continue_img = pygame.image.load('data/images/continue_text_3.png').convert()
                     continue_img.set_colorkey((255, 255, 255))
-                    py = 88
+                    py = 89
                 elif c == 2:
                     new_game_img = pygame.image.load('data/images/new_game_text_1.png').convert()
                     new_game_img.set_colorkey((255, 255, 255))
@@ -1400,7 +1506,7 @@ while True:
                     arena_img.set_colorkey((255, 255, 255))
                     continue_img = pygame.image.load('data/images/continue_text_4.png').convert()
                     continue_img.set_colorkey((255, 255, 255))
-                    py = 100
+                    py = 99
                 elif c == 3:
                     new_game_img = pygame.image.load('data/images/new_game_text_1.png').convert()
                     new_game_img.set_colorkey((255, 255, 255))
@@ -1410,7 +1516,7 @@ while True:
                     arena_img.set_colorkey((255, 255, 255))
                     continue_img = pygame.image.load('data/images/continue_text_4.png').convert()
                     continue_img.set_colorkey((255, 255, 255))
-                    py = 114
+                    py = 115
                 elif c > 2:
                     c = 0
                 elif c < 0:
@@ -1424,11 +1530,52 @@ while True:
             else:
                 display.blit(new_game_img, (95, 78))
                 display.blit(continue_img, (98, 88))
-                display.blit(arena_img, (106, 100))
+                display.blit(arena_img, (105, 100))
                 display.blit(exit_img, (110, 114))
                 display.blit(knifes_img, (80, py))
-        if current_level == -2:
-            pass
+        """if current_level == -2:
+            black_surf_text = pygame.Surface((240, 135))
+            black_surf_text.fill(pygame.color.Color(20, 12, 28))
+            display.blit(black_surf_text, (0, 0))
+
+            arena_logo = pygame.image.load('data/images/arena_text_3.png').convert()
+            arena_logo.set_colorkey((255, 255, 255))
+
+            if c == 0:
+                host = pygame.image.load('data/images/host_2.png').convert()
+                host.set_colorkey((255, 255, 255))
+                connect = pygame.image.load('data/images/connect_1.png').convert()
+                connect.set_colorkey((255, 255, 255))
+                main_menu = pygame.image.load('data/images/main_menu_text_3.png').convert()
+                main_menu.set_colorkey((255, 255, 255))
+                py = 79
+            elif c == 1:
+                host = pygame.image.load('data/images/host_1.png').convert()
+                host.set_colorkey((255, 255, 255))
+                connect = pygame.image.load('data/images/connect_2.png').convert()
+                connect.set_colorkey((255, 255, 255))
+                main_menu = pygame.image.load('data/images/main_menu_text_3.png').convert()
+                main_menu.set_colorkey((255, 255, 255))
+                py = 89
+            elif c == 2:
+                host = pygame.image.load('data/images/host_1.png').convert()
+                host.set_colorkey((255, 255, 255))
+                connect = pygame.image.load('data/images/connect_1.png').convert()
+                connect.set_colorkey((255, 255, 255))
+                main_menu = pygame.image.load('data/images/main_menu_text_4.png').convert()
+                main_menu.set_colorkey((255, 255, 255))
+                py = 99
+            elif c > 1:
+                c = 0
+            elif c < 0:
+                c = 2
+
+            display.blit(arena_logo, (97, 60))
+
+            display.blit(host, (107, 78))
+            display.blit(connect, (99, 88))
+            display.blit(main_menu, (107, 99))
+            display.blit(knifes_img, (80, py))"""
 
     # Эвенты кнопок
     for event in pygame.event.get():
@@ -1479,18 +1626,26 @@ while True:
                     if event.key == pygame.K_s:
                         c += 1
                     if event.key == pygame.K_SPACE:
-                        if c == 0:
-                            current_level = 1
-                            load_level(entities, current_level)
-                        elif c == 1:
-                            with open("save.json", "r") as save:
-                                data = json.load(save)
-                            current_level = data["current_level"]
-                            load_level(entities, data["current_level"])
-                        elif c == 2:
-                            current_level = -2
-                        elif c == 3:
-                            terminate()
+                        if current_level == 0:
+                            if c == 0:
+                                current_level = 1
+                                load_level(entities, current_level)
+                            elif c == 1:
+                                with open("save.json", "r") as save:
+                                    data = json.load(save)
+                                current_level = data["current_level"]
+                                load_level(entities, data["current_level"])
+                            elif c == 2:
+                                pass
+                            elif c == 3:
+                                terminate()
+                        """else:
+                            if c == 0:
+                                current_level = -3
+                            elif c == 1:
+                                current_level = -4
+                            elif c == 2:
+                                current_level = 0"""
 
     # Апдейты и всякая фигня
     screen.blit(pygame.transform.scale(display, (window_width, window_height)), (0, 0))
