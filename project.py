@@ -340,11 +340,11 @@ def download():
                    <h1 class="text" style="text-align:center; font-family: AnotherCastle3;"><font color="#00ff7f" 
                    size=7><center>ВЫБЕРИТЕ НУЖНЫЙ УСТАНОВЩИК</center></font></h1>
                    <div style="text-align: center">
-                    <a class="button yell" href="" download='static/img/izvinite.jpg'>
+                    <a class="button yell" href="" download=izvinite.jpg>
                      <i class="fa fa-user-plus"></i>
                      <span>Установить для MAC</span>
                     </a>
-                    <a class="button mint" href="" download='nazvaniyanetu.exe'>
+                    <a class="button mint" href="" download=nazvaniyanetu.exe>
                      <i class="fa fa-user-plus"></i>
                      <span>Установить для Windows</span>
                     </a>
