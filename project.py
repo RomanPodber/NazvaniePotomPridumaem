@@ -29,7 +29,6 @@ def start_page():
                         text-align: center;
                         text-decoration: none;
                         margin-top: 150px;
-
                         cursor: pointer;
                         font-size: 16px;
                         font-family: AnotherCastle3;
@@ -52,7 +51,6 @@ def start_page():
                     .button.mint {
                          background: #a1f9ba;
                                    }
-
                     .button:hover {
                          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
                                   }
@@ -295,7 +293,6 @@ def download():
                         text-align: center;
                         text-decoration: none;
                         margin-top: 150px;
-
                         cursor: pointer;
                         font-size: 16px;
                         font-family: AnotherCastle3;
@@ -315,7 +312,6 @@ def download():
                     .button.mint {
                          background: #a1f9ba;
                                    }
-
                     .button:hover {
                          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
                                   }
@@ -378,7 +374,6 @@ def congrat():
                             text-align: center;
                             text-decoration: none;
                             margin-top: 150px;
-
                             cursor: pointer;
                             font-size: 16px;
                             font-family: AnotherCastle3;
@@ -398,7 +393,6 @@ def congrat():
                         .button.mint {
                              background: #a1f9ba;
                                        }
-
                         .button:hover {
                              box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
                                       }
