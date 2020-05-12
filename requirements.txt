@@ -1,6 +1,0 @@
-flask
-sqlalchemy
-datetime
-flask_wtf
-wtforms
-gunicorn==20.0.
