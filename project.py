@@ -344,7 +344,7 @@ def download():
                      <i class="fa fa-user-plus"></i>
                      <span>Установить для MAC</span>
                     </a>
-                    <a class="button mint" href="" download=nazvaniepotompridumaem.exe>
+                    <a class="button mint" href="" download=nazvaniyanetu.exe>
                      <i class="fa fa-user-plus"></i>
                      <span>Установить для Windows</span>
                     </a>
