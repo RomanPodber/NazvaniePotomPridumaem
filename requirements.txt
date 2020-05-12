@@ -1,3 +1,5 @@
 flask
-data
+db_session
+register
+User
 gunicorn==20.0.
