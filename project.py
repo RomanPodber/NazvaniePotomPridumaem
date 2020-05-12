@@ -92,15 +92,15 @@ def start_page():
                    <p style="text-align:center; font-family: AnotherCastle3;"><font color="#a1f9ba" 
                    size=5>Предлагаю собственноручно опробовать возможности нашего сайта</font></p>
                    <div style="text-align:center;">
-                    <a id="login" class="button pink" href="http://127.0.0.16:8000/reg">
+                    <a id="login" class="button pink" href="/reg">
                      <i class="fa fa-unlock"></i>
                      <span>Регистрация</span>
                     </a>
-                    <a class="button yell" href="http://127.0.0.16:8000/wikipedia">
+                    <a class="button yell" href="/wikipedia">
                      <i class="fa fa-user-plus"></i>
                      <span>Об игре</span>
                     </a>
-                    <a class="button mint" href="http://127.0.0.16:8000/download">
+                    <a class="button mint" href="/download">
                      <i class="fa fa-user-plus"></i>
                      <span>Установить игру</span>
                     </a>
@@ -422,7 +422,7 @@ def congrat():
                        size=7><center>Вы успешно прошли регистрацию!<br>
                        Нажмите кнопку, чтобы вернуться в главное меню</center></font></h1>
                        <div style="text-align: center">
-                        <a class="button yell" href="http://127.0.0.16:8000/">
+                        <a class="button yell" href="/">
                          <i class="fa fa-user-plus"></i>
                          <span>Вернуться в меню</span>
                         </a>
@@ -466,4 +466,4 @@ def reg():
 
 
 if __name__ == "__main__":
-    app.run(port=8000, host="127.0.0.16")
+    app.run()
