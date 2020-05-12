@@ -344,7 +344,7 @@ def download():
                      <i class="fa fa-user-plus"></i>
                      <span>Установить для MAC</span>
                     </a>
-                    <a class="button mint" href="" download=nazvaniyanetu.exe>
+                    <a class="button mint" href="https://drive.google.com/file/d/17GHaKUu6bIynaFVh8akSaja9I2C6vUj0/view">
                      <i class="fa fa-user-plus"></i>
                      <span>Установить для Windows</span>
                     </a>
