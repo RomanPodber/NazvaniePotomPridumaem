@@ -68,9 +68,8 @@ def start_page():
                          text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
                                    }
                     .under {
-                        display: inline-block;
-                        margin-top: 150px;
-                        margin-right: 30px;
+                        display: inline-table;
+                        margin-top: 90px;
                            }
                     .text {
                         margin-top: 250px;
@@ -105,16 +104,31 @@ def start_page():
                      <span>Установить игру</span>
                     </a>
                     <div>
-                     <div class="under"><a href="https://vk.com/chainblubler"><img src="static/img/vk.png" width="50" 
-                     height="50"></a></div>
-                     <div class="under"><a href="https://vk.com/hellother"><img src="static/img/vk.png" width="50" 
-                     height="50"></a></div>
+                     <div class="under"><a href="https://vk.com/chainblubler"><img src="static/img/vk.png" width="25" 
+                     height="25" style="position:absolute;left:25px;margin-top:30px"></a></div>
+                     <div class="under"><a href="https://vk.com/hellother"><img src="static/img/vk.png" width="25" 
+                     height="25" style="position:absolute;left:25px;margin-top:60px"></a></div>
                      <div class="under"><a href="https://www.instagram.com/chainloverrr/"><img src="static/img/inst.png" 
-                     width="50" height="50"></a></div>
+                     width="25" height="25" style="position:absolute;left:25px;margin-top:90px"></a></div>
                      <div class="under"><a href="https://www.instagram.com/_just_roman__/"><img src="static/img/inst.png" 
-                     width="50" height="50"></a></div>
+                     width="25" height="25" style="position:absolute;left:25px;margin-top:120px"></a></div>
                      <div class="under"><a href="https://github.com/RomanPodber/NazvaniePotomPridumaem">
-                     <img src="static/img/github.png" width="50" height="50"></a></div>
+                     <img src="static/img/github.png" width="25" height="25" 
+                     style="position:absolute;left:65px;margin-top:30px;"></a></div>
+                    </div>
+                    <div>
+                     <div style="position:absolute;left:350px;margin-top:30px">ООО DOL Tech Pictures 
+                     Electronics International Inc Enterprise Mobile Company Group</div>
+                     <div style="position:absolute;left:350px;margin-top:60px;">Совместно с кукольным заводом 
+                     "Танцуй, Ваня"</div>
+                     <div style="position:absolute;left:350px;margin-top:90px;">При поддержке правительства 
+                     Татарстана</div>
+                     <div style="position:absolute;left:970px;margin-top:90px">Создаем сайты</div>
+                     <div style="position:absolute;left:970px;margin-top:30px;">Пишем музыку</div>
+                     <div style="position:absolute;left:970px;margin-top:60px;">Профессиональные игроки в 
+                     Rocket League</div>
+                     <div style="position:absolute;left:1120px;margin-top:90px;">+7-800-555-35-35</div>
+                     <div style="position:absolute;left:1120px;margin-top:120px;">Звонок платный</div>
                     </div>
                    </div>
                   </body>
@@ -135,11 +149,11 @@ def wiki():
                    <title>Startpage</title>
                     <style>
                     body {
-		                 background: url(static/img/main_pic.png) no-repeat center center fixed; 
-		                 -webkit-background-size:cover;
-                        -moz-background-size:cover;
-                        -o-background-size:cover;
-                        background-size: cover;
+		                 background: url(static/img/main_pic3.png) no-repeat;
+                         -moz-background-size: 100%;
+                         -webkit-background-size: 100%;
+                         -o-background-size: 100%;
+                         background-size: 100%;
                     .under {
                         margin-top: 350px;
                         margin-right: 30px;
@@ -228,8 +242,8 @@ def wiki():
                        <img src = "static/img/mob2.png" tab="photo" 
                        style="position:absolute;right:10px;top:1740px" width=250 height=250>
                    </h2>
-                    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" 
-                    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" 
+                   <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" 
+                   integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" 
                    crossorigin="anonymous"></script>
                    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" 
                    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" 
@@ -237,36 +251,63 @@ def wiki():
                    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" 
                    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" 
                    crossorigin="anonymous"></script>
-                   <div id="carousel-example-generic" class="carousel slide" data-ride="carousel" 
-                   style="text-align:center; margin-top:50px">
-                    <ol class="carousel-indicators">
-                     <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-                     <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-                     <li data-target="#carousel-example-generic" data-slide-to="2"></li>
-                     <li data-target="#carousel-example-generic" data-slide-to="3"></li>
-                    </ol>
-                    <div class="carousel-inner role="listbox" style="text-align:center;">
+                   <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+                    <div class="carousel-inner" style="text-align:center">
                      <div class="carousel-item active">
-                      <img src="static/img/1slide.jpg" alt="1">
+                      <img src="static/img/1slide.jpg">
                      </div>
-                     <div class="carousel-item" style="text-align:center;">
-                      <img src="static/img/2slide.jpg" alt="2">
+                     <div class="carousel-item">
+                      <img src="static/img/2slide.jpg">
                      </div>
-                     <div class="carousel-item" style="text-align:center;">
-                      <img src="static/img/3slide.jpg" alt="3">
+                     <div class="carousel-item">
+                      <img src="static/img/3slide.jpg">
                      </div>
-                     <div class="carousel-item" style="text-align:center;">
-                      <img src="static/img/4slide.jpg" alt="3">
+                     <div class="carousel-item">
+                      <img src="static/img/4slide.jpg">
                      </div>
                     </div>
-                    <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
-                     <span class="icon-prev" aria-hidden="true"></span>
+                    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                      <span class="sr-only">Previous</span>
                     </a>
-                    <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
-                     <span class="icon-next" aria-hidden="true"></span>
+                    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                      <span class="sr-only">Next</span>
                     </a>
+                    <div>
+                     <div style='text-align:center;size=6;margin-bottom:30px'>Небольшой слайдер</div>
+                    </div>
+                    <div>
+                     <div class="under"><a href="https://vk.com/chainblubler"><img src="static/img/vk.png" width="25" 
+                     height="25" style="position:absolute;left:25px;margin-top:61px"></a></div>
+                     <div class="under"><a href="https://vk.com/hellother"><img src="static/img/vk.png" width="25" 
+                     height="25" style="position:absolute;left:25px;margin-top:91px"></a></div>
+                     <div class="under"><a href="https://www.instagram.com/chainloverrr/"><img src="static/img/inst.png" 
+                     width="25" height="25" style="position:absolute;left:25px;margin-top:121px"></a></div>
+                     <div class="under"><a href="https://www.instagram.com/_just_roman__/"><img src="static/img/inst.png" 
+                     width="25" height="25" style="position:absolute;left:25px;margin-top:151px"></a></div>
+                     <div class="under"><a href="https://github.com/RomanPodber/NazvaniePotomPridumaem">
+                     <img src="static/img/github.png" width="25" height="25" 
+                     style="position:absolute;left:65px;margin-top:61px;"></a></div>
+                    </div>
+                    <div>
+                     <div style="position:absolute;left:250px;margin-top:61px"><font color="black" size=4>
+                     ООО DOL Tech Pictures Electronics International Inc Enterprise Mobile Company Group</div>
+                     <div style="position:absolute;left:250px;margin-top:91px;"><font color="black" size=3>
+                     Совместно с кукольным заводом 
+                     "Танцуй, Ваня"</div>
+                     <div style="position:absolute;left:250px;margin-top:121px;"><font color="black" size=3>
+                     При поддержке правительства 
+                     Татарстана</div>
+                     <div style="position:absolute;left:970px;margin-top:151px"><font color="black" size=3>Создаем сайты
+                     </font></div>
+                     <div style="position:absolute;left:970px;margin-top:61px;"><font color="black" size=3>
+                     Пишем музыку</div>
+                     <div style="position:absolute;left:970px;margin-top:91px;"><font color="black" size=3>
+                     Профессиональные игроки в Rocket League</div>
+                     <div style="position:absolute;left:1120px;margin-top:121px;">+7-800-555-35-35</div>
+                     <div style="position:absolute;left:1120px;margin-top:151px;">Звонок платный</div>
+                    </div>
                    </div>
                   </body>
                 </html>'''
@@ -344,10 +385,39 @@ def download():
                      <i class="fa fa-user-plus"></i>
                      <span>Установить для MAC</span>
                     </a>
-                    <a class="button mint" href="" download=nazvaniepotompridumaem.exe>
+                    <a class="button mint" href="https://drive.google.com/file/d/17GHaKUu6bIynaFVh8akSaja9I2C6vUj0/view
+">
                      <i class="fa fa-user-plus"></i>
                      <span>Установить для Windows</span>
                     </a>
+                   </div>
+                    <div>
+                     <div class="under"><a href="https://vk.com/chainblubler"><img src="static/img/vk.png" width="25" 
+                     height="25" style="position:absolute;left:25px;margin-top:127px"></a></div>
+                     <div class="under"><a href="https://vk.com/hellother"><img src="static/img/vk.png" width="25" 
+                     height="25" style="position:absolute;left:25px;margin-top:157px"></a></div>
+                     <div class="under"><a href="https://www.instagram.com/chainloverrr/"><img src="static/img/inst.png" 
+                     width="25" height="25" style="position:absolute;left:25px;margin-top:187px"></a></div>
+                     <div class="under"><a href="https://www.instagram.com/_just_roman__/"><img src="static/img/inst.png" 
+                     width="25" height="25" style="position:absolute;left:25px;margin-top:217px"></a></div>
+                     <div class="under"><a href="https://github.com/RomanPodber/NazvaniePotomPridumaem">
+                     <img src="static/img/github.png" width="25" height="25" 
+                     style="position:absolute;left:65px;margin-top:127px;"></a></div>
+                    </div>
+                    <div>
+                     <div style="position:absolute;left:350px;margin-top:127px">ООО DOL Tech Pictures 
+                     Electronics International Inc Enterprise Mobile Company Group</div>
+                     <div style="position:absolute;left:350px;margin-top:157px;">Совместно с кукольным заводом 
+                     "Танцуй, Ваня"</div>
+                     <div style="position:absolute;left:350px;margin-top:187px;">При поддержке правительства 
+                     Татарстана</div>
+                     <div style="position:absolute;left:970px;margin-top:187px">Создаем сайты</div>
+                     <div style="position:absolute;left:970px;margin-top:127px;">Пишем музыку</div>
+                     <div style="position:absolute;left:970px;margin-top:157px;">Профессиональные игроки в 
+                     Rocket League</div>
+                     <div style="position:absolute;left:1120px;margin-top:187px;">+7-800-555-35-35</div>
+                     <div style="position:absolute;left:1120px;margin-top:217px;">Звонок платный</div>
+                    </div>
                    </div>
                   </body>
                 </html>'''
@@ -426,6 +496,33 @@ def congrat():
                          <i class="fa fa-user-plus"></i>
                          <span>Вернуться в меню</span>
                         </a>
+                        <div>
+                         <div class="under"><a href="https://vk.com/chainblubler"><img src="static/img/vk.png" width="25" 
+                         height="25" style="position:absolute;left:25px;margin-top:92px"></a></div>
+                         <div class="under"><a href="https://vk.com/hellother"><img src="static/img/vk.png" width="25" 
+                         height="25" style="position:absolute;left:25px;margin-top:122px"></a></div>
+                         <div class="under"><a href="https://www.instagram.com/chainloverrr/"><img src="static/img/inst.png" 
+                         width="25" height="25" style="position:absolute;left:25px;margin-top:152px"></a></div>
+                         <div class="under"><a href="https://www.instagram.com/_just_roman__/"><img src="static/img/inst.png" 
+                         width="25" height="25" style="position:absolute;left:25px;margin-top:182px"></a></div>
+                         <div class="under"><a href="https://github.com/RomanPodber/NazvaniePotomPridumaem">
+                         <img src="static/img/github.png" width="25" height="25" 
+                         style="position:absolute;left:65px;margin-top:92px;"></a></div>
+                        </div>
+                        <div>
+                         <div style="position:absolute;left:350px;margin-top:92px">ООО DOL Tech Pictures 
+                         Electronics International Inc Enterprise Mobile Company Group</div>
+                         <div style="position:absolute;left:350px;margin-top:122px;">Совместно с кукольным заводом 
+                         "Танцуй, Ваня"</div>
+                         <div style="position:absolute;left:350px;margin-top:152px;">При поддержке правительства 
+                         Татарстана</div>
+                         <div style="position:absolute;left:970px;margin-top:152px">Создаем сайты</div>
+                         <div style="position:absolute;left:970px;margin-top:92px;">Пишем музыку</div>
+                         <div style="position:absolute;left:970px;margin-top:122px;">Профессиональные игроки в 
+                         Rocket League</div>
+                         <div style="position:absolute;left:1120px;margin-top:152px;">+7-800-555-35-35</div>
+                         <div style="position:absolute;left:1120px;margin-top:182px;">Звонок платный</div>
+                        </div>
                        </div>
                       </body>
                     </html>'''
@@ -453,6 +550,10 @@ def reg():
             return render_template('register.html', title='Регистрация',
                                    form=form,
                                    message="Такой пользователь уже есть")
+        if session.query(User).filter(User.name == form.name.data).first():
+            return render_template('register.html', title='Регистрация',
+                                   form=form,
+                                   message="Такое имя пользователя уже занято")
         user = User(
             name=form.name.data,
             email=form.email.data,
