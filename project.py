@@ -77,7 +77,7 @@ def start_page():
                    size=7><center>НАЗВАНИЕ ПОТОМ ПРИДУМАЕМ</center></font></h1>
                    <h2 style="text-align:center; font-family: AnotherCastle3"><font color="#a1f9ba" 
                    size=5>Добро пожаловать<br>
-                   Это основная страница нашего проекта</font></h2>
+                   Это основная страница нашего проекта.</font></h2>
                    <p style="text-align:center; font-family: AnotherCastle3;"><font color="#a1f9ba" 
                    size=5>В игре зарегистрировано уже больше 10000000 человек<br>
                    На этой странице вы можете установить игру, узнать о ней через нашу мини-Wiki,
@@ -472,8 +472,11 @@ def congrat():
 
 @app.route('/log', methods=['GET', 'POST'])
 def logging():
-    email = request.args.get('email')
-
+    email = request.data
+    if email:
+        return 'ok'
+    else:
+        return None
 
 
 def connecting(func):
