@@ -470,7 +470,7 @@ def congrat():
                     </html>'''
 
 
-@app.route('/congrats', methods=['GET', 'POST'])
+@app.route('/table', methods=['GET', 'POST'])
 def congrat():
     return '''<!doctype html>
                     <html lang="en">
