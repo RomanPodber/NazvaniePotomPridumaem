@@ -100,7 +100,7 @@ def start_page():
                     </a>
                     <a class="button mint" href="/table">
                      <i class="fa fa-user-plus"></i>
-                     <span>Таблица лидеров</span>
+                     <span>Таблица лидеров.</span>
                     </a>
                     <div>
                      <div class="under"><a href="https://vk.com/chainblubler"><img src="static/img/vk.png" width="25" 
@@ -472,7 +472,6 @@ def congrat():
 
 @app.route('/log', methods=['GET', 'POST'])
 def logging():
-    email = request.data
     return 'ok'
 
 
