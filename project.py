@@ -468,12 +468,7 @@ def congrat():
                        </div>
                       </body>
                     </html>'''
-
-
-@app.route('/log', methods=['GET', 'POST'])
-def logging():
-    return 'ok'
-
+	
 
 def connecting(func):
     db_session.global_init("db/userstable.sqlite")
