@@ -1,6 +1,6 @@
 from flask import Flask, redirect, render_template
 from data import db_session
-from data.users import RegisterForm, User, LoginForm
+from data.users import RegisterForm, User
 import requests
 
 
@@ -87,7 +87,7 @@ def start_page():
                    <p style="text-align:center; font-family: AnotherCastle3;"><font color="#a1f9ba" 
                    size=5>Предлагаю собственноручно опробовать возможности нашего сайта</font></p>
                    <div style="text-align:center;">
-                    <a id="login" class="button yell" href="/choose">
+                    <a id="login" class="button yell" href="/reg">
                      <i class="fa fa-unlock"></i>
                      <span>Вход или регистрация</span>
                     </a>
@@ -469,127 +469,6 @@ def congrat():
                        </div>
                       </body>
                     </html>'''
-
-
-@app.route('/choose', methods=['GET', 'POST'])
-def chose():
-    return '''<!doctype html>
-                        <html lang="en">
-                          <head>
-                           <title>Startpage</title>
-                            <style>
-                            html {
-                                background:url(static/img/main_pic2.png) no-repeat center center fixed;
-                                 -webkit-background-size:cover;
-                                 -moz-background-size:cover;
-                                 -o-background-size:cover;
-                                 background-size: cover;
-                                  }
-                            .button {
-                                border: none;
-                                outline: none;
-                                display: inline-block;
-                                text-align: center;
-                                text-decoration: none;
-                                margin-top: 150px;
-                                cursor: pointer;
-                                font-size: 16px;
-                                font-family: AnotherCastle3;
-                                padding: 20px 26px;
-                                border-radius: 150px;
-                                color: #000;
-                                    }
-                            .button i {
-                                margin-right: 4px;
-                                       }
-                            .button + .button {
-                                margin-left: 6px;
-                                              }
-                            .button.yell {
-                                 background: #f9e6a1;
-                                           }
-                            .button.mint {
-                                 background: #a1f9ba;
-                                           }
-                            .button:hover {
-                                 box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-                                          }
-                            .button:hover.yell {
-                                 background: #fbecb9;
-                                                  }
-                            .button:hover.mint {
-                                 background: #b9fbcc;
-                                                  }
-                            .button:active {
-                                 box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
-                                 text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-                                           }
-                            .under {
-                                display: inline-block;
-                                margin-top: 150px;
-                                margin-right: 30px;
-                                   }
-                            .text {
-                                margin-top: 250px;
-                                margin-right: 30px;
-                                  }
-                            </style>
-                          </head>
-                          <body>
-                           <h1 class="text" style="text-align:center; font-family: AnotherCastle3;"><font color="#00ff7f" 
-                           size=7><center>Вход и регистрация<br>
-                           Выберите, что вы хотите сделать</center></font></h1>
-                           <div style="text-align: center">
-                            <a class="button yell" href="/reg">
-                             <i class="fa fa-user-plus"></i>
-                             <span>Регистрация</span>
-                            </a>
-                            <a class="button mint" href="/login">
-                             <i class="fa fa-user-plus"></i>
-                             <span>Вход</span>
-                            </a>
-                            <div>
-                             <div class="under"><a href="https://vk.com/chainblubler"><img src="static/img/vk.png" width="25" 
-                             height="25" style="position:absolute;left:25px;margin-top:92px"></a></div>
-                             <div class="under"><a href="https://vk.com/hellother"><img src="static/img/vk.png" width="25" 
-                             height="25" style="position:absolute;left:25px;margin-top:122px"></a></div>
-                             <div class="under"><a href="https://www.instagram.com/chainloverrr/"><img src="static/img/inst.png" 
-                             width="25" height="25" style="position:absolute;left:25px;margin-top:152px"></a></div>
-                             <div class="under"><a href="https://www.instagram.com/_just_roman__/"><img src="static/img/inst.png" 
-                             width="25" height="25" style="position:absolute;left:25px;margin-top:182px"></a></div>
-                             <div class="under"><a href="https://github.com/RomanPodber/NazvaniePotomPridumaem">
-                             <img src="static/img/github.png" width="25" height="25" 
-                             style="position:absolute;left:65px;margin-top:92px;"></a></div>
-                            </div>
-                            <div>
-                             <div style="position:absolute;left:350px;margin-top:92px">ООО DOL Tech Pictures 
-                             Electronics International Inc Enterprise Mobile Company Group</div>
-                             <div style="position:absolute;left:350px;margin-top:122px;">Совместно с кукольным заводом 
-                             "Танцуй, Ваня"</div>
-                             <div style="position:absolute;left:350px;margin-top:152px;">При поддержке правительства 
-                             Татарстана</div>
-                             <div style="position:absolute;left:970px;margin-top:152px">Создаем сайты</div>
-                             <div style="position:absolute;left:970px;margin-top:92px;">Пишем музыку</div>
-                             <div style="position:absolute;left:970px;margin-top:122px;">Профессиональные игроки в 
-                             Rocket League</div>
-                             <div style="position:absolute;left:1120px;margin-top:152px;">+7-800-555-35-35</div>
-                             <div style="position:absolute;left:1120px;margin-top:182px;">Звонок платный</div>
-                            </div>
-                           </div>
-                          </body>
-                        </html>'''
-
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    form = LoginForm()
-    if form.validate_on_submit():
-        if form.password.data != form.password_again.data:
-            return render_template('register.html', title='Регистрация',
-                                   form=form,
-                                   message="Пароли не совпадают")
-        return redirect('/')
-    return render_template('login.html', title='Авторизация', form=form)
-
 
 
 def connecting(func):

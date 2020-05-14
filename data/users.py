@@ -44,11 +44,6 @@ class RegisterForm(FlaskForm):
     about = TextAreaField("Немного о себе")
     submit = SubmitField('Войти')
 
-class LoginForm(FlaskForm):
-    username = StringField('Логин', validators=[DataRequired()])
-    password = PasswordField('Пароль', validators=[DataRequired()])
-    remember_me = BooleanField('Запомнить меня')
-    submit = SubmitField('Войти')
 
 if __name__ == '__main__':
     app.run(port=8000, host='127.0.0.16')
