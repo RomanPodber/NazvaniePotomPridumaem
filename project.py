@@ -89,7 +89,7 @@ def start_page():
                    <div style="text-align:center;">
                     <a id="login" class="button yell" href="/reg">
                      <i class="fa fa-unlock"></i>
-                     <span>Вход или регистрация</span>
+                     <span>Регистрация</span>
                     </a>
                     <a class="button yell" href="/wikipedia">
                      <i class="fa fa-user-plus"></i>
