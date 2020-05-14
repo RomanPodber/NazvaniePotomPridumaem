@@ -76,7 +76,7 @@ def start_page():
                    <h1 class="text" style="text-align:center; font-family: AnotherCastle3;"><font color="#00ff7f" 
                    size=7><center>НАЗВАНИЕ ПОТОМ ПРИДУМАЕМ</center></font></h1>
                    <h2 style="text-align:center; font-family: AnotherCastle3"><font color="#a1f9ba" 
-                   size=5>Добро пожаловать!<br>
+                   size=5>Добро пожаловать<br>
                    Это основная страница нашего проекта</font></h2>
                    <p style="text-align:center; font-family: AnotherCastle3;"><font color="#a1f9ba" 
                    size=5>В игре зарегистрировано уже больше 10000000 человек<br>
