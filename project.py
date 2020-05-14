@@ -1,7 +1,6 @@
-from flask import Flask, redirect, render_template
+from flask import Flask, redirect, render_template, request
 from data import db_session
 from data.users import RegisterForm, User
-import requests
 
 
 
@@ -469,6 +468,12 @@ def congrat():
                        </div>
                       </body>
                     </html>'''
+
+
+@app.route('/log', methods=['GET', 'POST'])
+def logging():
+    email = request.args.get('email')
+
 
 
 def connecting(func):
