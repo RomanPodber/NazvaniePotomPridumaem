@@ -6,6 +6,7 @@ import math
 import os
 import pygame
 import random
+import requests
 # import socket Первая причина моего психоза в 16
 import sys
 import time
@@ -355,7 +356,10 @@ def text_screen(last_frame_text, screen_text):
                 if event.type == KEYDOWN:
                     if event.key == K_r:
                         going = False
-                        # сюда рестарт поставить
+                        # тут рестарт поставить
+                        with open("save.json", "r") as save:
+                            data = json.load(save)
+                        requests.post("http://nonamegame.herokuapp.com/death", data={"mail": data["login"]})
 
         screen.blit(pygame.transform.scale(display, (window_width, window_height)), (0, 0))
         pygame.display.update()
@@ -1502,6 +1506,9 @@ while True:
                     win_clock -= 1
                 else:
                     # Тут отправка о победе
+                    with open("save.json", "r") as save:
+                        data = json.load(save)
+                    requests.post("http://nonamegame.herokuapp.com/win", data={"mail": data["login"]})
                     exit()
             message_queue = [level_messages[current_level], 0, 0]
             load_level(entities, current_level)

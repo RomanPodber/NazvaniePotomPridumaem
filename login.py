@@ -8,8 +8,8 @@ with open("save.json", "r") as save:
 if data["login"] == " ":
     while 1:
         mail = input("Ваша почта: ")
-        requests.post("http://nonamegame.herokuapp.com/reg/log", data={"mail": mail})
-        res = requests.get("http://nonamegame.herokuapp.com/reg/log")
+        requests.post("http://nonamegame.herokuapp.com/log", data={"mail": mail})
+        res = requests.get("http://nonamegame.herokuapp.com/log")
         if res == "ok":
             os.startfile("волшебник маг властелин 2 игра.py")
             with open("save.json", "w") as dat:
