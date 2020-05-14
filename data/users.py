@@ -36,6 +36,18 @@ class User(SqlAlchemyBase):
     def check_password(self, password):
         return check_password_hash(self.hashed_password, password)
 
+class Death(SqlAlchemyBase):
+    __tablename__ = 'deathcount'
+
+    id = sqlalchemy.Column(sqlalchemy.Integer,
+                           primary_key=True, autoincrement=True)
+    name = sqlalchemy.Column(sqlalchemy.String, nullable=True)
+    deaths = sqlalchemy.Column(sqlalchemy.Integer, nullable=False)
+    wins = sqlalchemy.Column(sqlalchemy.Integer, nullable=False)
+
+
+
+
 class RegisterForm(FlaskForm):
     email = EmailField('Почта', validators=[DataRequired()])
     password = PasswordField('Пароль', validators=[DataRequired()])

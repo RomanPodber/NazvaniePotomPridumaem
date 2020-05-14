@@ -2,8 +2,6 @@ from flask import Flask, redirect, render_template, request
 from data import db_session
 from data.users import RegisterForm, User
 
-
-
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'z_k.,k._gbwwe'
 
@@ -100,7 +98,7 @@ def start_page():
                     </a>
                     <a class="button mint" href="/table">
                      <i class="fa fa-user-plus"></i>
-                     <span>Таблица лидеров</span>
+                     <span>Таблица лидеров.</span>
                     </a>
                     <div>
                      <div class="under"><a href="https://vk.com/chainblubler"><img src="static/img/vk.png" width="25" 
@@ -319,7 +317,7 @@ def wiki():
                      <span class="sr-only">Next</span>
                     </a>
                     <div>
-                     <div style='text-align:center;size=6;margin-bottom:30px'>Слайдер</div>
+                     <div style='text-align:center;size=6;margin-bottom:30px'></div>
                     </div>
                     <div style="text-align:center">
                      <a class="button mint" href="/">
@@ -361,8 +359,6 @@ def wiki():
                    </div>
                   </body>
                 </html>'''
-
-
 
 
 @app.route('/congrats', methods=['GET', 'POST'])
@@ -470,13 +466,109 @@ def congrat():
                     </html>'''
 
 
-@app.route('/log', methods=['GET', 'POST'])
-def logging():
-    email = request.data
-    if email:
-        return 'ok'
-    else:
-        return None
+@app.route('/table')
+def table():
+    return '''<!doctype html>
+                    <html lang="en">
+                      <head>
+                       <title>Startpage</title>
+                        <style>
+                        html {
+                            background:url(static/img/main_pic2.png) no-repeat center center fixed;
+                             -webkit-background-size:cover;
+                             -moz-background-size:cover;
+                             -o-background-size:cover;
+                             background-size: cover;
+                              }
+                        .button {
+                            border: none;
+                            outline: none;
+                            display: inline-block;
+                            text-align: center;
+                            text-decoration: none;
+                            margin-top: 150px;
+                            cursor: pointer;
+                            font-size: 16px;
+                            font-family: AnotherCastle3;
+                            padding: 20px 26px;
+                            border-radius: 150px;
+                            color: #000;
+                                }
+                        .button i {
+                            margin-right: 4px;
+                                   }
+                        .button + .button {
+                            margin-left: 6px;
+                                          }
+                        .button.yell {
+                             background: #f9e6a1;
+                                       }
+                        .button.mint {
+                             background: #a1f9ba;
+                                       }
+                        .button:hover {
+                             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+                                      }
+                        .button:hover.yell {
+                             background: #fbecb9;
+                                              }
+                        .button:hover.mint {
+                             background: #b9fbcc;
+                                              }
+                        .button:active {
+                             box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+                             text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+                                       }
+                        .under {
+                            display: inline-block;
+                            margin-top: 150px;
+                            margin-right: 30px;
+                               }
+                        .text {
+                            margin-top: 250px;
+                            margin-right: 30px;
+                              }
+                        </style>
+                      </head>
+                      <body>
+                       <h1 class="text" style="text-align:center; font-family: AnotherCastle3;"><font color="#00ff7f" 
+                       size=7><center>В стадии разработки</center></font></h1>
+                       <div style="text-align: center">
+                        <a class="button yell" href="/">
+                         <i class="fa fa-user-plus"></i>
+                         <span>Вернуться в меню</span>
+                        </a>
+                        <div>
+                         <div class="under"><a href="https://vk.com/chainblubler"><img src="static/img/vk.png" width="25" 
+                         height="25" style="position:absolute;left:25px;margin-top:92px"></a></div>
+                         <div class="under"><a href="https://vk.com/hellother"><img src="static/img/vk.png" width="25" 
+                         height="25" style="position:absolute;left:25px;margin-top:122px"></a></div>
+                         <div class="under"><a href="https://www.instagram.com/chainloverrr/"><img src="static/img/inst.png" 
+                         width="25" height="25" style="position:absolute;left:25px;margin-top:152px"></a></div>
+                         <div class="under"><a href="https://www.instagram.com/_just_roman__/"><img src="static/img/inst.png" 
+                         width="25" height="25" style="position:absolute;left:25px;margin-top:182px"></a></div>
+                         <div class="under"><a href="https://github.com/RomanPodber/NazvaniePotomPridumaem">
+                         <img src="static/img/github.png" width="25" height="25" 
+                         style="position:absolute;left:65px;margin-top:92px;"></a></div>
+                        </div>
+                        <div>
+                         <div style="position:absolute;left:350px;margin-top:92px">ООО DOL Tech Pictures 
+                         Electronics International Inc Enterprise Mobile Company Group</div>
+                         <div style="position:absolute;left:350px;margin-top:122px;">Совместно с кукольным заводом 
+                         "Танцуй, Ваня"</div>
+                         <div style="position:absolute;left:350px;margin-top:152px;">При поддержке правительства 
+                         Татарстана</div>
+                         <div style="position:absolute;left:970px;margin-top:152px">Создаем сайты</div>
+                         <div style="position:absolute;left:970px;margin-top:92px;">Пишем музыку</div>
+                         <div style="position:absolute;left:970px;margin-top:122px;">Профессиональные игроки в 
+                         Rocket League</div>
+                         <div style="position:absolute;left:1120px;margin-top:152px;">+7-800-555-35-35</div>
+                         <div style="position:absolute;left:1120px;margin-top:182px;">Звонок платный</div>
+                        </div>
+                       </div>
+                      </body>
+                    </html>'''
+
 
 
 def connecting(func):
