@@ -26,8 +26,9 @@ window_height = 405
 screen = pygame.display.set_mode((window_width, window_height), 0, 32)
 display = pygame.Surface((240, 135))
 
-
 # sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+win_clock = 120
+
 
 # Шрифт
 def get_text_width(text, spacing):
@@ -354,6 +355,7 @@ def text_screen(last_frame_text, screen_text):
                 if event.type == KEYDOWN:
                     if event.key == K_r:
                         going = False
+                        # сюда рестарт поставить
 
         screen.blit(pygame.transform.scale(display, (window_width, window_height)), (0, 0))
         pygame.display.update()
@@ -569,7 +571,7 @@ levels = {
         ['jamician', 112, 24]
     ],
     10: [
-         ['king', 112, 24]
+        ['king', 112, 24]
     ]
 }
 
@@ -1496,6 +1498,11 @@ while True:
             current_level += 1
             if current_level == 11:
                 text_screen(last_frame, 'Vi pobedili')
+                if win_clock >= 0:
+                    win_clock -= 1
+                else:
+                    # Тут отправка о победе
+                    exit()
             message_queue = [level_messages[current_level], 0, 0]
             load_level(entities, current_level)
     else:
