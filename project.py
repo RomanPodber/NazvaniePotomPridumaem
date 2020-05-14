@@ -473,10 +473,7 @@ def congrat():
 @app.route('/log', methods=['GET', 'POST'])
 def logging():
     email = request.data
-    if email:
-        return 'ok'
-    else:
-        return None
+    return 'ok'
 
 
 def connecting(func):
